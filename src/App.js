@@ -2,10 +2,10 @@ import React from "react";
 import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
-import Register from "./components/register/Register";
+import Register from "./components/forms/register/Register";
 import Logout from "./components/logout/Logout";
-import AddProduct from "./components/addProduct/AddProduct";
-import Login from "./components/login/Login";
+import AddProduct from "./components/forms/addProduct/AddProduct";
+import Login from "./components/forms/login/Login";
 import Home from "./components/home/Home";
 
 import "./App.css";

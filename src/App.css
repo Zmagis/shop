@@ -24,3 +24,21 @@ img {
   margin: 10px;
   border: 1px solid rgb(230, 230, 230);
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 500px;
+}
+form input {
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+form button {
+  box-sizing: border-box;
+  padding: 10px 0;
+}
