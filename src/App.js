@@ -5,7 +5,6 @@ import { NavLink } from "react-router-dom";
 import Register from "./components/register/Register";
 import Logout from "./components/logout/Logout";
 import AddProduct from "./components/addProduct/AddProduct";
-import Chart from "./components/chart/Chart";
 import Login from "./components/login/Login";
 import Home from "./components/home/Home";
 
@@ -27,9 +26,7 @@ function App() {
         <li className="NavigationItem">
           <NavLink to="addproduct">Add Product</NavLink>
         </li>
-        <li className="NavigationItem">
-          <NavLink to="chart">Chart</NavLink>
-        </li>
+
         <li className="NavigationItem">
           <NavLink to="/">Home</NavLink>
         </li>
@@ -38,7 +35,6 @@ function App() {
         <Route path="/register" component={Register} /> //all
         <Route path="/logout" component={Logout} />
         <Route path="/addproduct" component={AddProduct} /> //admin
-        <Route path="/chart" component={Chart} />
         <Route path="/login" component={Login} />
         <Route path="/" exact component={Home} /> //all
       </Switch>
