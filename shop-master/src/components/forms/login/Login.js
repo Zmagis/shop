@@ -3,9 +3,6 @@ import React, { useState } from "react";
 import Input from "../Input";
 
 const Login = () => {
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [conPassword, setConPassword] = useState("");
   const [formData, setFormData] = useState({
     username: {
       elementType: "input",
@@ -20,14 +17,6 @@ const Login = () => {
       elementConfig: {
         type: "password",
         placeholder: "Password",
-      },
-      value: "",
-    },
-    passwordConfirmation: {
-      elementType: "input",
-      elementConfig: {
-        type: "password",
-        placeholder: "Password Confirmation",
       },
       value: "",
     },
