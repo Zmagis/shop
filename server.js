@@ -12,12 +12,12 @@ const db = mysql.createConnection({
   //   insecureAuth: true,
 });
 
-// Connect to database
-db.connect((err) => {
-  if (err) throw err;
+// // Connect to database
+// db.connect((err) => {
+//   if (err) throw err;
 
-  console.log("Connected!");
-});
+//   console.log("Connected!");
+// });
 
 const app = express();
 
