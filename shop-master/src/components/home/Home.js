@@ -28,8 +28,8 @@ const Home = () => {
     <div>
       <h1>Home</h1>
       <div className="container">
-        {products.map((product) => (
-          <div className="product">
+        {products.map((product, i) => (
+          <div key={i} className="product">
             <img src={box} alt="" />
             <p>{product.idProducts}</p>
             <p>{product.Name}</p>

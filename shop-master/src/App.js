@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
 import Register from "./components/forms/register/Register";
@@ -32,11 +32,11 @@ function App() {
         </li>
       </ul>
       <Switch>
-        <Route path="/register" component={Register} /> //all
+        <Route path="/register" component={Register} />
         <Route path="/logout" component={Logout} />
-        <Route path="/addproduct" component={AddProduct} /> //admin
+        <Route path="/addproduct" component={AddProduct} />
         <Route path="/login" component={Login} />
-        <Route path="/" exact component={Home} /> //all
+        <Route path="/" exact component={Home} />
       </Switch>
     </div>
   );

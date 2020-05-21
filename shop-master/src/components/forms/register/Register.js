@@ -66,7 +66,7 @@ const Register = () => {
           />
         ))}
 
-        <button type="submit">Log In</button>
+        <button type="submit">Register</button>
       </form>
     </div>
   );

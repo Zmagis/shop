@@ -15,7 +15,7 @@
     "client-install": "cd shop-master && npm install",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "npm start --prefix client",
+    "client": "npm start --prefix shop-master",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
