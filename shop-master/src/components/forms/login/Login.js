@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from 'axios'; // 
 import Input from "../Input";
 
 const Login = () => {
@@ -34,6 +34,12 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log("submit");
+    axios
+    .post('http://localhost:9000/login', formData)
+    .then(() => console.log('formData'))
+    .catch(err => {
+      console.error(err);
+    });
   };
 
   const formElementArray = [];

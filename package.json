@@ -4,13 +4,15 @@
   "description": "Server side for master shop ",
   "main": "server.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "concurrently": "^5.2.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mysql": "^2.18.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.4"
   },
-  "devDependencies": {},
   "scripts": {
     "client-install": "cd shop-master && npm install",
     "start": "node server.js",
