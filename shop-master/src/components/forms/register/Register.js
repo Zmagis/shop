@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from 'axios';
 import Input from "../Input";
 
 const Register = () => {
@@ -44,8 +44,21 @@ const Register = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("submit");
+    const { password, passwordConfirmation } = formData;
+    // Check if password and passwordConfirmation matches
+    if (password.value !== passwordConfirmation.value) {
+      alert("Passwords don't match");
+      console.log("submit");
+    } else {
+    axios
+    .post('http://localhost:9000/create', formData)
+    .then(() => console.log('formData'))
+    .catch(err => {
+      console.error(err);
+    
+    });
   };
+}
 
   const formElementArray = [];
   for (let key in formData) {
