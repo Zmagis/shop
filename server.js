@@ -22,8 +22,8 @@ var db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "password",
-  database: "sys", // If database not exist, for the first time running npm start, comment this line and uncomment later.
-  insecureAuth: true,
+  // database: "sys", // If database not exist, for the first time running npm start, comment this line and uncomment later.
+  // insecureAuth: true,
 });
 
 // Connect to database

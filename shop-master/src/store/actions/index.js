@@ -1,0 +1,1 @@
+export { initFetchProducts } from "./actions";

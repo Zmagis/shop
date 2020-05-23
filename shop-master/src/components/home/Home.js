@@ -1,29 +1,26 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 
+import * as actions from "../../store/actions";
 import box from "../../img/box.jpg";
 
-const Home = () => {
-  // let products = [
-  //   { title: "One", price: "453", img: box },
-  //   { title: "Two", price: "453", img: box },
-  //   { title: "Three", price: "453", img: box },
-  //   { title: "Four", price: "453", img: box },
-  //   { title: "Five", price: "453", img: box },
-  //   { title: "Six", price: "453", img: box },
-  //   { title: "Seven", price: "453", img: box },
-  //   { title: "Eight", price: "453", img: box },
-  // ];
+const Home = (props) => {
+  const { onFetchProducts } = props;
+  useEffect(() => {
+    onFetchProducts();
+  }, [onFetchProducts]);
+
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    fetch("/api/product")
-      .then((res) => res.json())
-      .then((products) => {
-        setProducts([...products]);
-        console.log(products);
-      });
-  }, []);
-
+  // useEffect(() => {
+  //   fetch("/api/product")
+  //     .then((res) => res.json())
+  //     .then((products) => {
+  //       setProducts([...products]);
+  //       console.log(products);
+  //     });
+  // }, []);
+  console.log(props.prod);
   return (
     <div>
       <h1>Home</h1>
@@ -42,4 +39,16 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    prod: state.products,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchProducts: () => dispatch(actions.initFetchProducts()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

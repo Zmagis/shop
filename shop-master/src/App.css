@@ -31,7 +31,8 @@ form {
   margin: auto;
   width: 500px;
 }
-form input {
+form input,
+form textarea {
   margin: 10px 0;
   padding: 10px;
   width: 100%;
