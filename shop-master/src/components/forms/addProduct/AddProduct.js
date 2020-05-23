@@ -28,6 +28,14 @@ const AddPrduct = () => {
       },
       value: "",
     },
+    keywords: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Keywords",
+      },
+      value: "",
+    },
   });
 
   const changeHandler = () => {};

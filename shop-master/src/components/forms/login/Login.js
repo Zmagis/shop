@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import axios from 'axios'; // 
+import axios from "axios"; //
 import Input from "../Input";
+
+import "../Form.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -35,11 +37,11 @@ const Login = () => {
     e.preventDefault();
     console.log("submit");
     axios
-    .post('http://localhost:9000/login', formData)
-    .then(() => console.log('formData'))
-    .catch(err => {
-      console.error(err);
-    });
+      .post("http://localhost:9000/login", formData)
+      .then(() => console.log("formData"))
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const formElementArray = [];
@@ -63,6 +65,9 @@ const Login = () => {
 
         <button type="submit">Log In</button>
       </form>
+      <p>
+        Don't have an account? Register <a href="/register">here</a>
+      </p>
     </div>
   );
 };

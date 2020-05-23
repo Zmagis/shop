@@ -2,12 +2,6 @@
   text-align: center;
 }
 
-ul {
-  list-style: none;
-  display: flex;
-  width: 40%;
-  justify-content: space-around;
-}
 img {
   width: 300px;
   height: auto;
@@ -23,23 +17,4 @@ img {
   box-sizing: border-box;
   margin: 10px;
   border: 1px solid rgb(230, 230, 230);
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  width: 500px;
-}
-form input,
-form textarea {
-  margin: 10px 0;
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-form button {
-  box-sizing: border-box;
-  padding: 10px 0;
 }

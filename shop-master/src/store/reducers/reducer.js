@@ -3,7 +3,7 @@ import { updateObject } from "../util";
 import box from "../../img/box.jpg";
 
 const initialState = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   products: [
     { title: "One", price: "453", img: box },
     { title: "Two", price: "453", img: box },

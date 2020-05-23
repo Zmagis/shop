@@ -1,8 +1,9 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { NavLink, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
+import Navbar from "./components/navbar/Navbar";
 import Register from "./components/forms/register/Register";
 import Logout from "./components/logout/Logout";
 import AddProduct from "./components/forms/addProduct/AddProduct";
@@ -35,23 +36,7 @@ function App(props) {
 
   return (
     <div className="App">
-      <ul>
-        <li className="NavigationItem">
-          <NavLink to="/">Home</NavLink>
-        </li>
-        <li className="NavigationItem">
-          <NavLink to="register">Register</NavLink>
-        </li>
-        <li className="NavigationItem">
-          <NavLink to="login">Login</NavLink>
-        </li>
-        <li className="NavigationItem">
-          <NavLink to="admin">Admin</NavLink>
-        </li>
-        <li className="NavigationItem">
-          <NavLink to="addproduct">Add Product</NavLink>
-        </li>
-      </ul>
+      <Navbar />
       {routes}
     </div>
   );
