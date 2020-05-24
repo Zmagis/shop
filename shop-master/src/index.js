@@ -8,6 +8,7 @@ import { createStore, compose, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
+// import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 
 import App from "./App";

@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import "./Navbar.css";
 
 const Navbar = (props) => {
-  console.log(props.auth);
   let links;
   props.auth
     ? (links = (
@@ -13,23 +12,17 @@ const Navbar = (props) => {
           <li>
             <NavLink to="admin">Admin</NavLink>
           </li>
-          <li>
-            <NavLink to="addproduct">Add Product</NavLink>
-          </li>
-          <li>
-            <NavLink to="addproduct">Add Product</NavLink>
-          </li>
-          <li>
-            <NavLink to="/">Log Out</NavLink>
+          <li className="right">
+            <NavLink to="/logout">
+              <i className="fas fa-sign-out-alt"></i>
+            </NavLink>
           </li>
         </>
       ))
     : (links = (
         <>
-          <li>
+          <li className="right">
             <NavLink to="login">Login</NavLink>
-          </li>
-          <li>
             <NavLink to="register">Register</NavLink>
           </li>
         </>

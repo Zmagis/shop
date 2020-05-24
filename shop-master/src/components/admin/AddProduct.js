@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
+import Input from "../forms/Input";
 
-import Input from "../Input";
-
-const AddPrduct = () => {
+const AddPrduct = (props) => {
   const [formData, setFormData] = useState({
     title: {
       elementType: "input",
@@ -37,9 +37,32 @@ const AddPrduct = () => {
       value: "",
     },
   });
+  const [file, setFile] = useState("");
 
-  const changeHandler = () => {};
-  const submitHandler = () => {};
+  const changeHandler = (e, identifier) => {
+    const updatedFormData = { ...formData };
+    const updatedFormElement = { ...updatedFormData[identifier] };
+    updatedFormElement.value = e.target.value;
+    updatedFormData[identifier] = updatedFormElement;
+    setFormData(updatedFormData);
+    console.log(e.target.value);
+  };
+  const uploadImageHandler = (e, identifier) => {
+    setFile(e.target.files[0]);
+  };
+  console.log(file);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    axios
+      .post("http://localhost:9000/addproduct", { data: formData, image: file })
+      .then(() => console.log(formData))
+      .catch((err) => {
+        console.error(err);
+      });
+    props.setShow(false);
+  };
 
   const formElementArray = [];
   for (let key in formData) {
@@ -60,8 +83,21 @@ const AddPrduct = () => {
           />
         ))}
 
+        <div className="upload-btn-wrapper">
+          <button className={file !== "" ? "uploaded btn" : "btn"}>
+            Upload an image
+          </button>
+          <input
+            // className={file !== "" ? "uploaded" : null}
+            type="file"
+            name="image"
+            onChange={(e) => uploadImageHandler(e)}
+          />
+        </div>
+
         <button type="submit">Add</button>
       </form>
+      <i className="fab fa-500px"></i>
     </div>
   );
 };
