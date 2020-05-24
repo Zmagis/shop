@@ -3,16 +3,9 @@ import { Route, Switch } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-// import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
-
 import Navbar from "./components/navbar/Navbar";
 import Register from "./components/forms/register/Register";
 import Logout from "./components/logout/Logout";
-// import AddProduct from "./components/forms/addProduct/AddProduct";
 import Admin from "./components/admin/Admin";
 import Login from "./components/forms/login/Login";
 import Home from "./components/home/Home";
