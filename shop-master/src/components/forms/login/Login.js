@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios"; //
 import Input from "../Input";
-
 import "../Form.css";
+
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -38,7 +39,15 @@ const Login = () => {
     console.log("submit");
     axios
       .post("http://localhost:9000/login", formData)
-      .then(() => console.log("formData"))
+      .then( result => {
+        if (result.status === 200) {
+          alert("logged in");
+        } else if (result.status === 204) {
+          alert("password or username is incorect");
+        } else {
+         alert("username does not exits")
+        }
+      })
       .catch((err) => {
         console.error(err);
       });

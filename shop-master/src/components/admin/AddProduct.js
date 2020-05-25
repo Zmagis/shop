@@ -56,8 +56,15 @@ const AddPrduct = (props) => {
     e.preventDefault();
     console.log(formData);
     axios
-      .post("http://localhost:9000/addproduct", { data: formData, image: file })
-      .then(() => console.log(formData))
+      .post("http://localhost:9000/addproduct", formData, file)
+      .then( result => {
+        if (result.status === 200) {
+          alert("prodcut added")
+        } else if (result.status === 204) {
+          alert("Product already exits")
+        }else {
+          console.log("some error")
+        }})
       .catch((err) => {
         console.error(err);
       });

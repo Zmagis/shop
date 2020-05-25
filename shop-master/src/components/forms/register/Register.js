@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 import Input from "../Input";
 
 const Register = () => {
@@ -49,7 +49,16 @@ const Register = () => {
     } else {
     axios
     .post('http://localhost:9000/create', formData)
-    .then(() => console.log('formData'))
+    .then(result => {
+      if (result.status === 200) {
+        console.log("registered");
+        
+      } else if (result.status === 204) {
+        alert("Username already exits");
+      } else {
+        alert("error")
+      }
+    })
     .catch(err => {
       console.error(err);
     
