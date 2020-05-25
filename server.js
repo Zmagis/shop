@@ -1,7 +1,7 @@
 const express = require("express");
-
 const cors = require("cors");
 var mysql = require("mysql");
+const bcrypt = require('bcrypt');
 
 const app = express();
 
@@ -42,7 +42,7 @@ db.query("CREATE DATABASE IF NOT EXISTS sys", function (err) {
         "id INT NOT NULL AUTO_INCREMENT," +
         "PRIMARY KEY(id)," +
         "username VARCHAR(30)," +
-        "userpass VARCHAR(30)" +
+        "userpass VARCHAR(500)" +
         ")",
       function (err) {
         if (err) throw err;
@@ -53,7 +53,10 @@ db.query("CREATE DATABASE IF NOT EXISTS sys", function (err) {
         "idProducts INT NOT NULL AUTO_INCREMENT," +
         "PRIMARY KEY(idProducts)," +
         "Name VARCHAR(100)," +
-        "Price DECIMAL(10,2)" +
+        "Price DECIMAL(10,2)," +
+        "Description TEXT(10000)," +
+        "Keywords TEXT(500)," +
+        "image VARCHAR(250)" +
         ")",
       function (err) {
         if (err) throw err;
@@ -82,16 +85,31 @@ app.get("/api/product", (req, res) => {
 app.post("/create", (req, res) => {
   const userInput = {
     username: req.body.username.value,
-    userpass: req.body.password.value,
+    userpass: req.body.password.value 
   };
   console.log(userInput);
-  let sql = "INSERT INTO users SET ?";
-  let query = db.query(sql, userInput, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-  });
-
-  res.status(201).json({ some: "connected" });
+  db.query("SELECT username FROM users WHERE username = ?", [userInput.username],
+  async function (error, results) {
+    if (error) {
+      res.status(400).json({result: "error"})
+    } else {
+      if (results.length > 0) {
+        res.status(204).json({ result: "user name exits" })
+      } else {
+        bcrypt.hash(userInput.userpass, 10, function(err, hash){
+          if(err) console.log(err);
+          userInput.userpass = hash;
+          let sql = "INSERT INTO users SET ?";
+          let query = db.query(sql, userInput, (err, result) => {
+          if (err) throw err;
+          console.log(result);
+          res.status(200).json({ result: "user created" });
+          });
+         });
+      }
+    }
+  }
+  )
 });
 
 // get route from client submited data to login form
@@ -101,40 +119,58 @@ app.post("/login", (req, res) => {
   db.query(
     "SELECT * FROM users WHERE username = ?",
     [username],
-    async function (error, results, fields) {
+    async function (error, results) {
       if (error) {
-        res.send({
-          code: 400,
-          failed: "error ocurred",
-        });
+        res.status(400).json({ result: "error" })
       } else {
         if (results.length > 0) {
-          //const comparision = await bcrypt.compare(userpass, results[0].userpass)
-          const comparision = userpass == results[0].userpass;
+          const comparision = await bcrypt.compare(userpass, results[0].userpass)
+          console.log(comparision);
           if (comparision) {
             console.log("connected");
-            res.send({
-              code: 200,
-              success: "login sucessfull",
-            });
+            res.status(200).json({ result: "logged in" });
           } else {
-            console.log("wrond username and/or password");
-            res.send({
-              code: 204,
-              success: "Email and password does not match",
-            });
+            console.log("wrong username and/or password");
+            res.status(204).json({ result: "username and password does not match" });
           }
         } else {
           console.log("username does not exits");
-          res.send({
-            code: 206,
-            success: "Email does not exits",
-          });
+          res.status(206).json({ result: "username does not exits" });
         }
       }
     }
   );
 });
+
+app.post("/addproduct", (req, res) => {
+var productInput = {
+  Name : req.body.title.value,
+  Price : req.body.price.value,
+  Description : req.body.description.value,
+  Keywords: req.body.keywords.value,
+  //image: req.file
+}
+console.log(productInput)
+db.query("SELECT Name FROM products WHERE Name = ?", [productInput.Name],
+  async function (error, results) {
+    if (error) {
+      res.status(400).json({result: "error"})
+    } else {
+      if (results.length > 0) {
+        res.status(204).json({ result: "Product already exits" })
+      } else {
+          console.log(productInput);
+          let sql = "INSERT INTO products SET ?";
+          let query = db.query(sql, productInput, (err, result) => {
+              if (err) throw err;
+              console.log(result);
+              res.status(200).json({ result: "product added" });
+            })
+          }
+        }}
+        )
+      });
+
 
 const port = 9000;
 
