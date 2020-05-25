@@ -1,20 +1,10 @@
 .App {
+  overflow-x: hidden;
+  color: rgb(63, 63, 63);
+}
+h1 {
   text-align: center;
 }
-
-img {
-  width: 300px;
-  height: auto;
-}
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 80vw;
-  margin: auto;
-}
-.product {
-  box-sizing: border-box;
-  margin: 10px;
-  border: 1px solid rgb(230, 230, 230);
+a {
+  color: rgb(63, 63, 63);
 }
