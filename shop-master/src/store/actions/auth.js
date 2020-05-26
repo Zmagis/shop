@@ -5,8 +5,8 @@ export const authSuccess = () => {
   return { type: actionTypes.AUTH_SUCCESS };
 };
 
-export const authFail = () => {
-  return { type: actionTypes.AUTH_FAIL };
+export const authFail = (errorMsg) => {
+  return { type: actionTypes.AUTH_FAIL, errorMsg };
 };
 
 export const authStart = () => {
@@ -20,7 +20,6 @@ export const logout = () => {
 export const auth = (username, password) => {
   return (dispatch) => {
     dispatch(authStart());
-
     const authData = { username, password };
     axios
       .post("http://localhost:9000/login", authData)
@@ -28,9 +27,30 @@ export const auth = (username, password) => {
         if (result.status === 200) {
           dispatch(authSuccess());
         } else if (result.status === 204) {
-          alert("password or username is incorect");
+          dispatch(authFail("Password or username is incorect"));
         } else {
-          alert("username does not exits");
+          dispatch(authFail("Username does not exits"));
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+};
+
+export const register = (username, password) => {
+  return (dispatch) => {
+    dispatch(authStart());
+    const registerData = { username, password };
+    axios
+      .post("http://localhost:9000/create", registerData)
+      .then((result) => {
+        if (result.status === 200) {
+          dispatch(authSuccess());
+        } else if (result.status === 204) {
+          dispatch(authFail("Username already exits"));
+        } else {
+          dispatch(authFail("Something went wrong"));
         }
       })
       .catch((err) => {

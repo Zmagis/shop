@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
-import Input from "../Input";
+import { connect } from "react-redux";
 
-const Register = () => {
+import Input from "../Input";
+import * as actions from "../../../store/actions";
+
+const Register = (props) => {
   const [formData, setFormData] = useState({
     username: {
       elementType: "input",
@@ -47,20 +49,7 @@ const Register = () => {
       alert("Passwords don't match");
       console.log("submit");
     } else {
-      axios
-        .post("http://localhost:9000/create", formData)
-        .then((result) => {
-          if (result.status === 200) {
-            console.log("registered");
-          } else if (result.status === 204) {
-            alert("Username already exits");
-          } else {
-            alert("error");
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      props.onRegister(formData.username.value, formData.password.value);
     }
   };
 
@@ -82,7 +71,7 @@ const Register = () => {
             changeHandler={(e) => changeHandler(e, element.id)}
           />
         ))}
-
+        {props.error ? <p className="error">{props.errorMsg}</p> : null}
         <button type="submit">Register</button>
       </form>
       <p className="txt-center">
@@ -92,4 +81,20 @@ const Register = () => {
   );
 };
 
-export default Register;
+const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.loading,
+    isAuth: state.auth.isAuthenticated,
+    error: state.auth.error,
+    errorMsg: state.auth.errorMsg,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onRegister: (email, password) =>
+      dispatch(actions.register(email, password)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

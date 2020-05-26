@@ -57,7 +57,7 @@ const Login = (props) => {
             changeHandler={(e) => changeHandler(e, element.id)}
           />
         ))}
-
+        {props.error ? <p className="error">{props.errorMsg}</p> : null}
         <button type="submit">Log In</button>
       </form>
       <p className="txt-center">
@@ -70,6 +70,8 @@ const mapStateToProps = (state) => {
   return {
     loading: state.auth.loading,
     isAuth: state.auth.isAuthenticated,
+    error: state.auth.error,
+    errorMsg: state.auth.errorMsg,
   };
 };
 

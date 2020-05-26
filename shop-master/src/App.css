@@ -11,3 +11,6 @@ a {
 .txt-center {
   text-align: center;
 }
+.error {
+  color: red;
+}

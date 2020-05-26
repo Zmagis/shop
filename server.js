@@ -84,8 +84,8 @@ app.get("/api/product", (req, res) => {
 // get route from client submited data to register form
 app.post("/create", (req, res) => {
   const userInput = {
-    username: req.body.username.value,
-    userpass: req.body.password.value,
+    username: req.body.username,
+    userpass: req.body.password,
   };
   console.log(userInput);
   db.query(

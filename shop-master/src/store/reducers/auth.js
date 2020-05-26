@@ -4,6 +4,7 @@ import { updateObject } from "../util";
 const initialState = {
   isAuthenticated: false,
   error: false,
+  errorMsg: "",
   loading: false,
 };
 
@@ -18,7 +19,11 @@ const auth = (state = initialState, action) => {
         isAuthenticated: true,
       });
     case actionTypes.AUTH_FAIL:
-      return updateObject(state, { loading: false });
+      return updateObject(state, {
+        loading: false,
+        error: true,
+        errorMsg: action.errorMsg,
+      });
     case actionTypes.AUTH_LOGOUT:
       return updateObject(state, { loading: false, isAuthenticated: false });
 
