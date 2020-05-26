@@ -47,24 +47,22 @@ const Register = () => {
       alert("Passwords don't match");
       console.log("submit");
     } else {
-    axios
-    .post('http://localhost:9000/create', formData)
-    .then(result => {
-      if (result.status === 200) {
-        console.log("registered");
-        
-      } else if (result.status === 204) {
-        alert("Username already exits");
-      } else {
-        alert("error")
-      }
-    })
-    .catch(err => {
-      console.error(err);
-    
-    });
+      axios
+        .post("http://localhost:9000/create", formData)
+        .then((result) => {
+          if (result.status === 200) {
+            console.log("registered");
+          } else if (result.status === 204) {
+            alert("Username already exits");
+          } else {
+            alert("error");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   };
-}
 
   const formElementArray = [];
   for (let key in formData) {
@@ -87,7 +85,7 @@ const Register = () => {
 
         <button type="submit">Register</button>
       </form>
-      <p>
+      <p className="txt-center">
         Already have an account? <a href="/login">Log in</a>
       </p>
     </div>

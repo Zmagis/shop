@@ -7,6 +7,7 @@ import "./Home.css";
 import ProductDetails from "./ProductDetails/ProductDetails";
 import Product from "./Product";
 import Backdrop from "../UI/backdrop/Backdrop";
+import Spinner from "../UI/Spinner/Spinner";
 
 const Home = (props) => {
   const [showProductDetails, setShowProductDetails] = useState(false);
@@ -37,16 +38,20 @@ const Home = (props) => {
       ) : null}
       <h1>Home</h1>
       <div className="container">
-        {props.products.map((product, i) => (
-          <Product
-            key={i}
-            id={product.productId}
-            name={product.Name}
-            img={product.img}
-            price={product.Price}
-            handleShow={handleShow}
-          />
-        ))}
+        {!props.products ? (
+          <Spinner />
+        ) : (
+          props.products.map((product, i) => (
+            <Product
+              key={i}
+              id={product.productId}
+              name={product.Name}
+              img={product.img}
+              price={product.Price}
+              handleShow={handleShow}
+            />
+          ))
+        )}
       </div>
     </div>
   );
@@ -54,7 +59,7 @@ const Home = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    products: state.products,
+    products: state.home.products,
   };
 };
 

@@ -5,7 +5,7 @@ import "./ProductDetails.css";
 const ProductDetails = ({ data }) => {
   return (
     <div className="product-details">
-      <img src={data.img} />
+      <img src={data.img} alt="" />
       <div className="info">
         <h2>{data.Name}</h2>
         <p>{data.description}</p>

@@ -2,38 +2,25 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
-import Input from "../forms/Input";
+import * as actions from "../../store/actions";
 
 import "./Navbar.css";
 
 const Navbar = (props) => {
-  // const [filter, setFilter] = useState({
-  //   elementType: "select",
-  //   elementConfig: {
-  //     options: [
-  //       { value: "All" },
-  //       { value: "Clothes" },
-  //       { value: "Shoes" },
-  //       { value: "Books" },
-  //       { value: "Other" },
-  //     ],
-  //   },
-  //   value: "All",
-  // });
-
+  const handleLogout = () => {
+    props.onLogout();
+  };
   let links;
   props.auth
     ? (links = (
         <>
-          {/* <li>
-          </li> */}
           <li className="right">
             <NavLink to="admin">Admin</NavLink>
             <NavLink to="/logout">
               <i className="fas fa-shopping-basket"></i>
             </NavLink>
             <NavLink to="/logout">
-              <i className="fas fa-sign-out-alt"></i>
+              <i className="fas fa-sign-out-alt" onClick={handleLogout}></i>
             </NavLink>
           </li>
         </>
@@ -46,6 +33,7 @@ const Navbar = (props) => {
           </li>
         </>
       ));
+
   return (
     <ul>
       <li className="NavigationItem">
@@ -53,11 +41,6 @@ const Navbar = (props) => {
           Home
         </NavLink>
       </li>
-      {/* <Input
-        elementType={filter.elementType}
-        elementConfig={filter.elementConfig}
-        value={filter.value}
-      /> */}
       {links}
     </ul>
   );
@@ -65,8 +48,14 @@ const Navbar = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.isAuthenticated,
+    auth: state.auth.isAuthenticated,
   };
 };
 
-export default connect(mapStateToProps)(Navbar);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLogout: () => dispatch(actions.logout()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

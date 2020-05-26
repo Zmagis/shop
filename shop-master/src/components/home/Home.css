@@ -52,7 +52,6 @@
   box-sizing: border-box;
   width: 40px;
   padding: 10px;
-  padding-top: 20px;
   cursor: pointer;
 }
 .icon:hover {

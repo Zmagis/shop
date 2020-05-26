@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios"; //
+import { connect } from "react-redux";
+
 import Input from "../Input";
+import * as actions from "../../../store/actions";
 import "../Form.css";
 
-
-
-const Login = () => {
+const Login = (props) => {
   const [formData, setFormData] = useState({
     username: {
       elementType: "input",
@@ -31,26 +31,12 @@ const Login = () => {
     updatedFormElement.value = e.target.value;
     updatedFormData[identifier] = updatedFormElement;
     setFormData(updatedFormData);
-    console.log(e.target.value);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("submit");
-    axios
-      .post("http://localhost:9000/login", formData)
-      .then( result => {
-        if (result.status === 200) {
-          alert("logged in");
-        } else if (result.status === 204) {
-          alert("password or username is incorect");
-        } else {
-         alert("username does not exits")
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    props.onAuth(formData.username.value, formData.password.value);
+    console.log(props.isAuth);
   };
 
   const formElementArray = [];
@@ -74,11 +60,22 @@ const Login = () => {
 
         <button type="submit">Log In</button>
       </form>
-      <p>
+      <p className="txt-center">
         Don't have an account? Register <a href="/register">here</a>
       </p>
     </div>
   );
 };
+const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.loading,
+    isAuth: state.auth.isAuthenticated,
+  };
+};
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuth: (email, password) => dispatch(actions.auth(email, password)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -7,7 +7,6 @@ import out from "../../img/out.jpg";
 import wooden from "../../img/wooden.jpg";
 
 const initialState = {
-  isAuthenticated: true,
   products: [
     {
       productId: 1,
@@ -80,7 +79,7 @@ const initialState = {
   error: false,
 };
 
-const reducer = (state = initialState, action) => {
+const home = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.FETCH_PRODUCTS_START:
       return updateObject(state, { loading: true, error: false });
@@ -97,4 +96,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export default reducer;
+export default home;

@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 var mysql = require("mysql");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 const app = express();
 
@@ -64,7 +64,7 @@ db.query("CREATE DATABASE IF NOT EXISTS sys", function (err) {
     );
   });
 });
-
+// });
 // route for showing products in client index page
 app.get("/api/product", (req, res) => {
   //const product  = [
@@ -85,53 +85,61 @@ app.get("/api/product", (req, res) => {
 app.post("/create", (req, res) => {
   const userInput = {
     username: req.body.username.value,
-    userpass: req.body.password.value 
+    userpass: req.body.password.value,
   };
   console.log(userInput);
-  db.query("SELECT username FROM users WHERE username = ?", [userInput.username],
-  async function (error, results) {
-    if (error) {
-      res.status(400).json({result: "error"})
-    } else {
-      if (results.length > 0) {
-        res.status(204).json({ result: "user name exits" })
+  db.query(
+    "SELECT username FROM users WHERE username = ?",
+    [userInput.username],
+    async function (error, results) {
+      if (error) {
+        res.status(400).json({ result: "error" });
       } else {
-        bcrypt.hash(userInput.userpass, 10, function(err, hash){
-          if(err) console.log(err);
-          userInput.userpass = hash;
-          let sql = "INSERT INTO users SET ?";
-          let query = db.query(sql, userInput, (err, result) => {
-          if (err) throw err;
-          console.log(result);
-          res.status(200).json({ result: "user created" });
+        if (results.length > 0) {
+          res.status(204).json({ result: "user name exits" });
+        } else {
+          bcrypt.hash(userInput.userpass, 10, function (err, hash) {
+            if (err) console.log(err);
+            userInput.userpass = hash;
+            let sql = "INSERT INTO users SET ?";
+            let query = db.query(sql, userInput, (err, result) => {
+              if (err) throw err;
+              console.log(result);
+              res.status(200).json({ result: "user created" });
+            });
           });
-         });
+        }
       }
     }
-  }
-  )
+  );
 });
 
 // get route from client submited data to login form
 app.post("/login", (req, res) => {
-  var username = req.body.username.value;
-  var userpass = req.body.password.value;
+  let username = req.body.username;
+  let userpass = req.body.password;
+
   db.query(
     "SELECT * FROM users WHERE username = ?",
     [username],
     async function (error, results) {
       if (error) {
-        res.status(400).json({ result: "error" })
+        res.status(400).json({ result: "error" });
       } else {
         if (results.length > 0) {
-          const comparision = await bcrypt.compare(userpass, results[0].userpass)
+          const comparision = await bcrypt.compare(
+            userpass,
+            results[0].userpass
+          );
           console.log(comparision);
           if (comparision) {
             console.log("connected");
             res.status(200).json({ result: "logged in" });
           } else {
             console.log("wrong username and/or password");
-            res.status(204).json({ result: "username and password does not match" });
+            res
+              .status(204)
+              .json({ result: "username and password does not match" });
           }
         } else {
           console.log("username does not exits");
@@ -143,34 +151,36 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/addproduct", (req, res) => {
-var productInput = {
-  Name : req.body.title.value,
-  Price : req.body.price.value,
-  Description : req.body.description.value,
-  Keywords: req.body.keywords.value,
-  //image: req.file
-}
-console.log(productInput)
-db.query("SELECT Name FROM products WHERE Name = ?", [productInput.Name],
-  async function (error, results) {
-    if (error) {
-      res.status(400).json({result: "error"})
-    } else {
-      if (results.length > 0) {
-        res.status(204).json({ result: "Product already exits" })
+  var productInput = {
+    Name: req.body.title.value,
+    Price: req.body.price.value,
+    Description: req.body.description.value,
+    Keywords: req.body.keywords.value,
+    //image: req.file
+  };
+  console.log(productInput);
+  db.query(
+    "SELECT Name FROM products WHERE Name = ?",
+    [productInput.Name],
+    async function (error, results) {
+      if (error) {
+        res.status(400).json({ result: "error" });
       } else {
+        if (results.length > 0) {
+          res.status(204).json({ result: "Product already exits" });
+        } else {
           console.log(productInput);
           let sql = "INSERT INTO products SET ?";
           let query = db.query(sql, productInput, (err, result) => {
-              if (err) throw err;
-              console.log(result);
-              res.status(200).json({ result: "product added" });
-            })
-          }
-        }}
-        )
-      });
-
+            if (err) throw err;
+            console.log(result);
+            res.status(200).json({ result: "product added" });
+          });
+        }
+      }
+    }
+  );
+});
 
 const port = 9000;
 
