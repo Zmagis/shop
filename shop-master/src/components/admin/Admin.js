@@ -51,6 +51,9 @@ const Admin = () => {
   const handleAddForm = () => {
     setShowAddForm(!showAddForm);
   };
+  const handleEdit = () => {
+    console.log("edit");
+  };
 
   return (
     <div>
@@ -60,16 +63,22 @@ const Admin = () => {
           <AddProduct setShow={setShowAddForm} />
         </Backdrop>
       ) : null}
-      <h1>
-        Admin <i className="fas fa-plus" onClick={handleAddForm}></i>
-      </h1>
 
-      <p>this is where admin can see all his products</p>
-      <p> also admin can see how many views has each of his product</p>
-      <p>maybe other statistic</p>
+      <h1>
+        Add more items for sell{" "}
+        <span>
+          <i
+            className="fas fa-plus"
+            style={{ cursor: "pointer", color: "grey", marginLeft: "10px" }}
+            onClick={handleAddForm}
+          ></i>
+        </span>
+      </h1>
       {data.map((item, i) => (
         <div key={i} className="box">
-          <ProductDetails data={item} />
+          <ProductDetails data={item}>
+            <i className="far fa-edit icon" onClick={handleEdit}></i>
+          </ProductDetails>
         </div>
       ))}
     </div>

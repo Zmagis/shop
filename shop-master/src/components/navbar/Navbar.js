@@ -10,8 +10,10 @@ const Navbar = (props) => {
   const handleLogout = () => {
     props.onLogout();
   };
+
   let links;
-  props.auth
+  // props.auth ||
+  localStorage.getItem("username") !== null
     ? (links = (
         <>
           <li className="right">

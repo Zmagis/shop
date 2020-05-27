@@ -57,14 +57,15 @@ const AddPrduct = (props) => {
     console.log(formData);
     axios
       .post("http://localhost:9000/addproduct", formData, file)
-      .then( result => {
+      .then((result) => {
         if (result.status === 200) {
-          alert("prodcut added")
+          alert("prodcut added");
         } else if (result.status === 204) {
-          alert("Product already exits")
-        }else {
-          console.log("some error")
-        }})
+          alert("Product already exits");
+        } else {
+          console.log("some error");
+        }
+      })
       .catch((err) => {
         console.error(err);
       });
@@ -104,7 +105,8 @@ const AddPrduct = (props) => {
 
         <button type="submit">Add</button>
       </form>
-      <i className="fab fa-500px"></i>
+      <br />
+      {/* <i className="fab fa-500px"></i> */}
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
 
-export const authSuccess = () => {
-  return { type: actionTypes.AUTH_SUCCESS };
+export const authSuccess = (username) => {
+  return { type: actionTypes.AUTH_SUCCESS, username };
 };
 
 export const authFail = (errorMsg) => {
@@ -25,7 +25,7 @@ export const auth = (username, password) => {
       .post("http://localhost:9000/login", authData)
       .then((result) => {
         if (result.status === 200) {
-          dispatch(authSuccess());
+          dispatch(authSuccess(username));
         } else if (result.status === 204) {
           dispatch(authFail("Password or username is incorect"));
         } else {
@@ -46,7 +46,7 @@ export const register = (username, password) => {
       .post("http://localhost:9000/create", registerData)
       .then((result) => {
         if (result.status === 200) {
-          dispatch(authSuccess());
+          dispatch(authSuccess(username));
         } else if (result.status === 204) {
           dispatch(authFail("Username already exits"));
         } else {

@@ -46,10 +46,10 @@
 .icons {
   width: 80px;
   display: flex;
-  align-items: flex-end;
 }
 .icon {
   box-sizing: border-box;
+  margin-top: 100%;
   width: 40px;
   padding: 10px;
   cursor: pointer;

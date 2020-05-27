@@ -2,7 +2,7 @@ import React from "react";
 
 import "./ProductDetails.css";
 
-const ProductDetails = ({ data }) => {
+const ProductDetails = ({ data, children }) => {
   return (
     <div className="product-details">
       <img src={data.img} alt="" />
@@ -11,10 +11,11 @@ const ProductDetails = ({ data }) => {
         <p>{data.description}</p>
 
         <div className="bottom">
-          <p>Price: {data.Price} €</p>
           <div>
-            <i className="fas fa-shopping-basket icon"></i>
+            <p>Price: {data.Price} €</p>
+            <p>Views: ___</p>
           </div>
+          <div>{children}</div>
         </div>
       </div>
     </div>

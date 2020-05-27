@@ -14,7 +14,8 @@ import "./App.css";
 
 function App(props) {
   let routes;
-  props.isAuth
+  // props.isAuth ||
+  localStorage.getItem("username") !== null
     ? (routes = (
         <Switch>
           <Route path="/logout" component={Logout} />

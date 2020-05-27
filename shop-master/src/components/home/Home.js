@@ -33,7 +33,10 @@ const Home = (props) => {
             className="fas fa-times leave-modal"
             onClick={() => setShowProductDetails(false)}
           ></i>
-          <ProductDetails data={selectedItem[0]} />
+          <ProductDetails data={selectedItem[0]}>
+            <i className="fas fa-shopping-basket icon"></i>
+            <i className="far fa-credit-card icon"></i>
+          </ProductDetails>
         </Backdrop>
       ) : null}
       <h1>Home</h1>

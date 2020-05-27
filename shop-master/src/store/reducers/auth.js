@@ -13,7 +13,7 @@ const auth = (state = initialState, action) => {
     case actionTypes.AUTH_START:
       return updateObject(state, { error: false, loading: true });
     case actionTypes.AUTH_SUCCESS:
-      console.log(action.path);
+      localStorage.setItem("username", action.username);
       return updateObject(state, {
         loading: false,
         isAuthenticated: true,
@@ -25,6 +25,7 @@ const auth = (state = initialState, action) => {
         errorMsg: action.errorMsg,
       });
     case actionTypes.AUTH_LOGOUT:
+      localStorage.clear();
       return updateObject(state, { loading: false, isAuthenticated: false });
 
     default:
