@@ -3,59 +3,51 @@ import axios from "axios";
 import Input from "../forms/Input";
 
 const AddPrduct = (props) => {
-  // const [formData, setFormData] = useState({
-  //   title: {
-  //     elementType: "input",
-  //     elementConfig: {
-  //       type: "text",
-  //       placeholder: "Title",
-  //     },
-  //     value: "",
-  //   },
-  //   price: {
-  //     elementType: "input",
-  //     elementConfig: {
-  //       type: "text",
-  //       placeholder: "Price",
-  //     },
-  //     value: "",
-  //   },
-  //   description: {
-  //     elementType: "textarea",
-  //     elementConfig: {
-  //       type: "text",
-  //       placeholder: "Description",
-  //     },
-  //     value: "",
-  //   },
-  //   keywords: {
-  //     elementType: "input",
-  //     elementConfig: {
-  //       type: "text",
-  //       placeholder: "Keywords",
-  //     },
-  //     value: "",
-  //   },
-  //   image: {
-  //     elementType: "input",
-  //     elementConfig: {
-  //       type: "file",
-  //       // placeholder: "Keywords",
-  //     },
-  //     value: "",
-  //   },
-  // });
+  const [formData, setFormData] = useState({
+    title: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Title",
+      },
+      value: "",
+    },
+    price: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Price",
+      },
+      value: "",
+    },
+    description: {
+      elementType: "textarea",
+      elementConfig: {
+        type: "text",
+        placeholder: "Description",
+      },
+      value: "",
+    },
+    keywords: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Keywords",
+      },
+      value: "",
+    },
+  });
 
   const [file, setFile] = useState(null);
 
-  // const changeHandler = (e, identifier) => {
-  //   const updatedFormData = { ...formData };
-  //   const updatedFormElement = { ...updatedFormData[identifier] };
-  //   updatedFormElement.value = e.target.value;
-  //   updatedFormData[identifier] = updatedFormElement;
-  //   setFormData(updatedFormData);
-  //   console.log(e.target.value);
-  // };
+  const changeHandler = (e, identifier) => {
+    const updatedFormData = { ...formData };
+    const updatedFormElement = { ...updatedFormData[identifier] };
+    updatedFormElement.value = e.target.value;
+    updatedFormData[identifier] = updatedFormElement;
+    setFormData(updatedFormData);
+    console.log(e.target.value);
+  };
   const uploadImageHandler = (e, identifier) => {
     console.log("uploadImageHandler");
     setFile(e.target.files[0]);
@@ -65,9 +57,11 @@ const AddPrduct = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     // console.log(formData);
-     console.log(file);
-     const data=new FormData();
-     data.append('image',file);
+    console.log(file);
+    const data = new FormData();
+    data.append("image", file);
+    data.append("inputs", formData);
+    console.log(data);
     axios
       .post("http://localhost:9000/addproduct", data)
       .then((result) => {
@@ -85,16 +79,16 @@ const AddPrduct = (props) => {
     props.setShow(false);
   };
 
-  // const formElementArray = [];
-  // for (let key in formData) {
-  //   formElementArray.push({ id: key, config: formData[key] });
-  // }
+  const formElementArray = [];
+  for (let key in formData) {
+    formElementArray.push({ id: key, config: formData[key] });
+  }
 
   return (
     <div>
       <h1>ADD</h1>
       <form method="POST" onSubmit={submitHandler}>
-        {/* {formElementArray.map((element) => (
+        {formElementArray.map((element) => (
           <Input
             key={element.id}
             elementType={element.config.elementType}
@@ -106,7 +100,7 @@ const AddPrduct = (props) => {
                 : (e) => changeHandler(e, element.id)
             }
           />
-        ))} */}
+        ))}
 
         <div className="upload-btn-wrapper">
           <button className={file !== "" ? "uploaded btn" : "btn"}>
