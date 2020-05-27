@@ -1,11 +1,36 @@
 const express = require("express");
 const cors = require("cors");
-var mysql = require("mysql");
+const mysql = require("mysql");
+const path = require("path");
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+const storage = multer.diskStorage({
+destination: function(req, file, cb) {
+cb(null, './uploads');
+},
+filename: function(req, file, cb){
+cb(null, file.originalname);
+}
+});
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
+});
 
 const app = express();
 
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: false }));
 
 // CORS niddleware, enable CORS on the server
@@ -142,13 +167,14 @@ app.post("/login", (req, res) => {
   );
 });
 
-app.post("/addproduct", (req, res) => {
-var productInput = {
-  Name : req.body.title.value,
-  Price : req.body.price.value,
-  Description : req.body.description.value,
-  Keywords: req.body.keywords.value,
-  //image: req.file
+app.post("/addproduct", upload.single('image'), (req, res, next) => {
+  console.log(req.file);
+let productInput = {
+  Name : req.body.data.title.value,
+  Price : req.body.data.price.value,
+  Description : req.body.data.description.value,
+  Keywords: req.body.data.keywords.value,
+  image: req.file
 }
 console.log(productInput)
 db.query("SELECT Name FROM products WHERE Name = ?", [productInput.Name],

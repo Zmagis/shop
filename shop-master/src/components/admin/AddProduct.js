@@ -49,14 +49,19 @@ const AddPrduct = (props) => {
   };
   const uploadImageHandler = (e, identifier) => {
     setFile(e.target.files[0]);
+    var newArray = this.state.arr.slice();    
+    newArray.push(file);   
+    this.setState({arr:newArray})
   };
   console.log(file);
+ 
 
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(formData);
+    console.log(file);
     axios
-      .post("http://localhost:9000/addproduct", formData, file)
+      .post("http://localhost:9000/addproduct", {data: formData, image: file})
       .then( result => {
         if (result.status === 200) {
           alert("prodcut added")
@@ -79,7 +84,7 @@ const AddPrduct = (props) => {
   return (
     <div>
       <h1>ADD</h1>
-      <form method="POST" onSubmit={submitHandler}>
+      <form method="POST"  onSubmit={submitHandler}>
         {formElementArray.map((element) => (
           <Input
             key={element.id}
