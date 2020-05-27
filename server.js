@@ -177,7 +177,7 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/addproduct", upload.single("image"), (req, res, next) => {
-  console.log(req.file);
+  console.log("req.file: " + req.file);
   let productInput = {
     Name: req.body.data.title.value,
     Price: req.body.data.price.value,
