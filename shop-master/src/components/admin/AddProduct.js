@@ -43,6 +43,7 @@ const AddPrduct = (props) => {
         // placeholder: "Keywords",
       },
       value: "",
+      selectedFile: null,
     },
   });
   // const [file, setFile] = useState("");
@@ -56,6 +57,11 @@ const AddPrduct = (props) => {
     console.log(e.target.value);
   };
   const uploadImageHandler = (e, identifier) => {
+    const updatedFormData = { ...formData };
+    const updatedFormElement = { ...updatedFormData[identifier] };
+    updatedFormElement.selectedFile = e.target.files[0];
+    updatedFormData[identifier] = updatedFormElement;
+    setFormData(updatedFormData);
     console.log("uploadImageHandler");
     // setFile(e.target.files[0]);
   };
