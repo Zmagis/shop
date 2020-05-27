@@ -36,8 +36,16 @@ const AddPrduct = (props) => {
       },
       value: "",
     },
+    image: {
+      elementType: "input",
+      elementConfig: {
+        type: "file",
+        // placeholder: "Keywords",
+      },
+      value: "",
+    },
   });
-  const [file, setFile] = useState("");
+  // const [file, setFile] = useState("");
 
   const changeHandler = (e, identifier) => {
     const updatedFormData = { ...formData };
@@ -48,15 +56,16 @@ const AddPrduct = (props) => {
     console.log(e.target.value);
   };
   const uploadImageHandler = (e, identifier) => {
-    setFile(e.target.files[0]);
+    console.log("uploadImageHandler");
+    // setFile(e.target.files[0]);
   };
-  console.log(file);
+  // console.log(file);
 
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(formData);
     axios
-      .post("http://localhost:9000/addproduct", formData, file)
+      .post("http://localhost:9000/addproduct", formData)
       .then((result) => {
         if (result.status === 200) {
           alert("prodcut added");
@@ -87,11 +96,15 @@ const AddPrduct = (props) => {
             elementType={element.config.elementType}
             elementConfig={element.config.elementConfig}
             value={element.config.value}
-            changeHandler={(e) => changeHandler(e, element.id)}
+            changeHandler={
+              element.config.elementConfig.type === "file"
+                ? (e) => uploadImageHandler(e, element.id)
+                : (e) => changeHandler(e, element.id)
+            }
           />
         ))}
 
-        <div className="upload-btn-wrapper">
+        {/* <div className="upload-btn-wrapper">
           <button className={file !== "" ? "uploaded btn" : "btn"}>
             Upload an image
           </button>
@@ -101,7 +114,7 @@ const AddPrduct = (props) => {
             name="image"
             onChange={(e) => uploadImageHandler(e)}
           />
-        </div>
+        </div> */}
 
         <button type="submit">Add</button>
       </form>
