@@ -64,6 +64,7 @@ const AddPrduct = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(formData);
+    // console.log(file);
     axios
       .post("http://localhost:9000/addproduct", formData)
       .then((result) => {
