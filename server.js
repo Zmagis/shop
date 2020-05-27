@@ -23,12 +23,16 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 1024 * 1024 * 5,
+    fileSize: 1024 * 1024 * 10,
   },
   fileFilter: fileFilter,
 });
 
 const app = express();
+var bodyParser = require('body-parser');
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
@@ -179,11 +183,11 @@ app.post("/login", (req, res) => {
 app.post("/addproduct", upload.single("image"), (req, res, next) => {
   console.log("req.file: " + req.file);
   let productInput = {
-    Name: req.body.data.title.value,
-    Price: req.body.data.price.value,
-    Description: req.body.data.description.value,
-    Keywords: req.body.data.keywords.value,
-    image: req.file,
+    //Name: req.body.data.title.value,
+    //Price: req.body.data.price.value,
+    //Description: req.body.data.description.value,
+    //Keywords: req.body.data.keywords.value,
+    image: req.file.path
   };
   console.log(productInput);
   db.query(

@@ -65,9 +65,11 @@ const AddPrduct = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     // console.log(formData);
-    // console.log(file);
+     console.log(file);
+     const data=new FormData();
+     data.append('image',file);
     axios
-      .post("http://localhost:9000/addproduct", file)
+      .post("http://localhost:9000/addproduct", data)
       .then((result) => {
         if (result.status === 200) {
           alert("prodcut added");
