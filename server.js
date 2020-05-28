@@ -183,10 +183,10 @@ app.post("/login", (req, res) => {
 app.post("/addproduct", upload.single("image"), (req, res, next) => {
   console.log("req.file: " + req.file);
   let productInput = {
-    //Name: req.body.data.title.value,
-    //Price: req.body.data.price.value,
-    //Description: req.body.data.description.value,
-    //Keywords: req.body.data.keywords.value,
+    Name: req.body.title,
+    Price: req.body.price,
+    Description: req.body.description,
+    Keywords: req.body.keywords,
     image: req.file.path
   };
   console.log(productInput);
