@@ -9,7 +9,6 @@ import box from "../../img/box.jpg";
 import boxFriend from "../../img/box-friend.jpg";
 import out from "../../img/out.jpg";
 import wooden from "../../img/wooden.jpg";
-
 const data = [
   {
     productId: 1,

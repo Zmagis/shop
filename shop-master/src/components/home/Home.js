@@ -53,6 +53,8 @@ const Home = (props) => {
               name={product.Name}
               img={product.image}
               price={product.Price}
+              user={product.user}
+              date={product.date}
               handleShow={handleShow}
             />
           ))

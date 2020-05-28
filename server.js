@@ -86,7 +86,9 @@ db.query("CREATE DATABASE IF NOT EXISTS sys", function (err) {
         "Price DECIMAL(10,2)," +
         "Description TEXT(10000)," +
         "Keywords TEXT(500)," +
-        "image VARCHAR(250)" +
+        "image VARCHAR(250)," +
+        "user TEXT(500)," +
+        "date TEXT(500)" +
         ")",
       function (err) {
         if (err) throw err;
@@ -187,7 +189,9 @@ app.post("/addproduct", upload.single("image"), (req, res, next) => {
     Price: req.body.price,
     Description: req.body.description,
     Keywords: req.body.keywords,
-    image: req.file.path
+    image: req.file.path,
+    user: req.body.username,
+    date: req.body.date
   };
   console.log(productInput);
   db.query(

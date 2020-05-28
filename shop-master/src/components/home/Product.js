@@ -11,6 +11,8 @@ const Product = (props) => {
         <div className="text">
           <h3>{props.name}</h3>
           <p>Price: {props.price} €</p>
+          <p>Posted: {props.date}</p>
+          <p>By: {props.user}</p>
         </div>
 
         <div className="icons">

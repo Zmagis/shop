@@ -54,7 +54,8 @@ const AddPrduct = (props) => {
     setFile(e.target.files[0]);
   };
   console.log(file);
-
+  let today = new Date().toISOString().slice(0, 10)
+  console.log(today)
   const submitHandler = (e) => {
     e.preventDefault();
     // console.log(formData);
@@ -66,6 +67,8 @@ const AddPrduct = (props) => {
     data.append("keywords", formData.keywords.value);
     data.append("title", formData.title.value);
     data.append("description", formData.description.value);
+    data.append("username", localStorage.username);
+    data.append("date", today);
     console.log(data);
     axios
       .post("http://localhost:9000/addproduct", data)
