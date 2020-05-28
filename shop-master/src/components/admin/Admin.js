@@ -78,6 +78,7 @@ const Admin = () => {
         <div key={i} className="box">
           <ProductDetails data={item}>
             <i className="far fa-edit icon" onClick={handleEdit}></i>
+            <i className="far fa-trash-alt icon"></i>
           </ProductDetails>
         </div>
       ))}

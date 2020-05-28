@@ -14,12 +14,13 @@ export const initFetchProducts = () => {
   return (dispatch) => {
     dispatch(fetchProductsStart());
     axios
-      .get("http://localhost:9000/api/product")
+      .get("/api/product")
       .then((response) => {
-        if (response.data.results.length === 0) {
+        console.log(response.data);
+        if (response.data.length === 0) {
           dispatch(fetchProductsFail());
         } else {
-          dispatch(fetchProducts(response.data.results));
+          dispatch(fetchProducts(response.data));
         }
       })
       .catch((error) => {
