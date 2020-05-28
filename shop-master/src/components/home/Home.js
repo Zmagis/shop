@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-
+import axios from "axios"
 import * as actions from "../../store/actions";
 
 import "./Home.css";
@@ -24,6 +24,9 @@ const Home = (props) => {
     setSelectedItem(clicked);
     console.log(clicked);
   };
+
+  
+
 
   return (
     <div>
@@ -65,6 +68,12 @@ const mapStateToProps = (state) => {
     products: state.home.products,
   };
 };
+// route to get product
+  axios.get(`/api/product`)
+    .then(res => {
+      const product = res.data;
+      console.log(product);
+    })
 
 const mapDispatchToProps = (dispatch) => {
   return {

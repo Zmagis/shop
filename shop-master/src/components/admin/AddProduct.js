@@ -48,6 +48,7 @@ const AddPrduct = (props) => {
     setFormData(updatedFormData);
     console.log(e.target.value);
   };
+  console.log(formData.price);
   const uploadImageHandler = (e, identifier) => {
     console.log("uploadImageHandler");
     setFile(e.target.files[0]);
@@ -58,9 +59,13 @@ const AddPrduct = (props) => {
     e.preventDefault();
     // console.log(formData);
     console.log(file);
+    console.log(formData);
     const data = new FormData();
     data.append("image", file);
-    data.append("inputs", formData);
+    data.append("price", formData.price.value);
+    data.append("keywords", formData.keywords.value);
+    data.append("title", formData.title.value);
+    data.append("description", formData.description.value);
     console.log(data);
     axios
       .post("http://localhost:9000/addproduct", data)
