@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
+import StripeCheckout from 'react-stripe-checkout';
 
 import * as actions from "../../../store/actions";
 
 import "./Basket.css";
+import Stripe from "stripe";
 
 const Basket = ({ products, onFetchProducts }) => {
   useEffect(() => {
@@ -18,11 +21,28 @@ const Basket = ({ products, onFetchProducts }) => {
   console.log(localStorage.getItem("basket"));
   let ids = localStorage.getItem("basket");
 
+  const makePayment = token => {
+    const body = {
+      token, 
+      //product
+    }
+    axios
+      .post("http://localhost:9000/payment", body)
+      .then((result) => {
+        if (result.status === 200) {
+          alert("success");
+        } else {
+          console.log("some error");
+        }
+      })
+    }
+
+
   if (ids !== null) {
     filteredArr = products.filter((item) => ids.includes(item.idProducts));
 
-    // total = filteredArr.reduce((acc, curr) => acc + curr);
-    // console.log(total);
+     //total = filteredArr.reduce((acc, curr) => acc + curr);
+     //console.log(total);
 
     filteredItems = filteredArr.map((product) => (
       <tr key={product.idProducts}>
@@ -57,6 +77,17 @@ const Basket = ({ products, onFetchProducts }) => {
             <td></td>
             <td>Total:__</td>
           </tr>
+          <StripeCheckout
+          stripeKey="pk_test_OtPH56R0K9McMN5SdhabDEKC"
+          token={makePayment}
+          name="testas"
+          amount="10*10"
+          shippingAddress
+          billingAddress
+          >
+            <button> Pay now</button>
+          </StripeCheckout>
+        
         </tfoot>
       </table>
     </div>

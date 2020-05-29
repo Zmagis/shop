@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-
+//secrect stripe api key
+const stripe = require("stripe")("sk_test_hepYyhkn8dUdZasqrLWjlMfW00RgPIVInX");
+const { v4: uuidV4 } = require('uuid');
 const mysql = require("mysql");
 const path = require("path");
 const bcrypt = require("bcrypt");
@@ -28,11 +30,13 @@ const upload = multer({
   fileFilter: fileFilter,
 });
 
+
 const app = express();
 var bodyParser = require("body-parser");
+//middleware
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
-
+app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 app.use(express.urlencoded({ extended: false }));
@@ -180,7 +184,7 @@ app.post("/login", (req, res) => {
     }
   );
 });
-
+//route for add product
 app.post("/addproduct", upload.single("image"), (req, res, next) => {
   console.log("req.file: " + req.file);
   let productInput = {
@@ -219,7 +223,7 @@ app.post("/addproduct", upload.single("image"), (req, res, next) => {
     }
   );
 });
-
+// route for deleting product
 app.delete("/deleteproduct/:id", (req, res) => {
   console.log(req.params.id);
   let id = {
@@ -233,8 +237,38 @@ app.delete("/deleteproduct/:id", (req, res) => {
           res.status(200).json({ result: "product deleted" });
         });
 });
+//route for stripe payment
+app.post("/payment", (req, res) =>{
+  const {products, token} = req.body;
+  //console.log("PRODUCT", product);
+  //console.log("PRICE", product.pirce);
+  const idempontencyKey = uuidV4
+
+  return stripe.customers.create({
+    email:token.email,
+    source: token.id
+
+  }).then(customer => {
+    stripe.charges.create({
+      amount: product.price * 100,
+      currenry: 'eur',
+      customer: customer.id,
+      receipt_email: token.email,
+      //description: `purchase of ${product.name}`,
+      shipping: {
+        name: token.card.name,
+        adress: {
+          country: token.card.address_country
+        }
+      }
+    }, {idempontencyKey})
+  }).then(result => res.status(200).json(result))
+  .catch(err => console.log(err) )
+
+})
 
 
+//listen
 const port = 9000;
 
 app.listen(port, () => console.log(`server started on port ${port}`));
