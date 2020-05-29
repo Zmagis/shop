@@ -12,15 +12,15 @@ const Navbar = (props) => {
   };
 
   let links;
-  // props.auth ||
+
   localStorage.getItem("username") !== null
     ? (links = (
         <>
           <li className="right">
-            <NavLink to="admin">Admin</NavLink>
-            <NavLink to="/logout">
-              <i className="fas fa-shopping-basket"></i>
+            <NavLink to="admin">
+              <i class="fas fa-user-alt"></i>
             </NavLink>
+
             <NavLink to="/logout">
               <i className="fas fa-sign-out-alt" onClick={handleLogout}></i>
             </NavLink>
@@ -30,6 +30,9 @@ const Navbar = (props) => {
     : (links = (
         <>
           <li className="right">
+            <NavLink to="/basket">
+              <i className="fas fa-shopping-basket"></i>
+            </NavLink>
             <NavLink to="login">Login</NavLink>
             <NavLink to="register">Register</NavLink>
           </li>

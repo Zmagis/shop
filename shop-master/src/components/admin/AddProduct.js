@@ -53,12 +53,15 @@ const AddPrduct = (props) => {
     console.log("uploadImageHandler");
     setFile(e.target.files[0]);
   };
+<<<<<<< HEAD
   console.log(file);
   let today = new Date().toISOString().slice(0, 10)
   console.log(today)
+=======
+
+>>>>>>> basket
   const submitHandler = (e) => {
     e.preventDefault();
-    // console.log(formData);
     console.log(file);
     console.log(formData);
     const data = new FormData();
@@ -85,6 +88,7 @@ const AddPrduct = (props) => {
         console.error(err);
       });
     props.setShow(false);
+    setFile("");
   };
 
   const formElementArray = [];
@@ -111,7 +115,7 @@ const AddPrduct = (props) => {
         ))}
 
         <div className="upload-btn-wrapper">
-          <button className={file !== "" ? "uploaded btn" : "btn"}>
+          <button className={file !== null ? "uploaded btn" : "btn"}>
             Upload an image
           </button>
           <input

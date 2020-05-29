@@ -9,6 +9,7 @@ import Logout from "./components/logout/Logout";
 import Admin from "./components/admin/Admin";
 import Login from "./components/forms/login/Login";
 import Home from "./components/home/Home";
+import Basket from "./components/admin/basket/Basket";
 
 import "./App.css";
 
@@ -28,6 +29,7 @@ function App(props) {
         <Switch>
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
+          <Route path="/basket" component={Basket} />
           <Route path="/" exact component={Home} />
           <Redirect to="/" />
         </Switch>
