@@ -54,7 +54,7 @@ const Home = (props) => {
       <div className="container">
         {props.loading ? (
           <Spinner />
-        ) : !props.products ? (
+        ) : props.products.length === 0 ? (
           <p>Nothing for sale yet</p>
         ) : (
           props.products.map((product, i) => (

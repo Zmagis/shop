@@ -29,10 +29,9 @@ const upload = multer({
 });
 
 const app = express();
-var bodyParser = require('body-parser');
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-
+var bodyParser = require("body-parser");
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
@@ -52,7 +51,7 @@ var db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "password",
-  database: "sys", // If database not exist, for the first time running npm start, comment this line and uncomment later.
+  // database: "sys", // If database not exist, for the first time running npm start, comment this line and uncomment later.
   // insecureAuth: true,
 });
 
@@ -191,7 +190,7 @@ app.post("/addproduct", upload.single("image"), (req, res, next) => {
     Keywords: req.body.keywords,
     image: req.file.path,
     user: req.body.username,
-    date: req.body.date
+    date: req.body.date,
   };
   console.log(productInput);
   db.query(

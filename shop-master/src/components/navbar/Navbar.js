@@ -18,7 +18,7 @@ const Navbar = (props) => {
         <>
           <li className="right">
             <NavLink to="admin">
-              <i class="fas fa-user-alt"></i>
+              <i className="fas fa-user-alt"></i>
             </NavLink>
 
             <NavLink to="/logout">

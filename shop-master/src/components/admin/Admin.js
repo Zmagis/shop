@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 import "./Admin.css";
 
@@ -47,11 +48,29 @@ const data = [
 const Admin = () => {
   const [showAddForm, setShowAddForm] = useState(false);
 
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+  const [deleteTitle, setDeleteTitle] = useState("");
+
   const handleAddForm = () => {
     setShowAddForm(!showAddForm);
   };
   const handleEdit = () => {
     console.log("edit");
+  };
+
+  const handleDelete = (id, name) => {
+    console.log(`delete ${id}`);
+    setShowConfirmDelete(true);
+    setDeleteTitle(name);
+    setDeleteId(id);
+  };
+  const confirmDelete = () => {
+    console.log(`confirmed ${deleteId}`);
+    axios.delete("/delete", {
+      data: { id: deleteId },
+    });
+    setShowConfirmDelete(false);
   };
 
   return (
@@ -60,6 +79,16 @@ const Admin = () => {
         <Backdrop width="600px">
           <i className="fas fa-times leave-modal" onClick={handleAddForm}></i>
           <AddProduct setShow={setShowAddForm} />
+        </Backdrop>
+      ) : null}
+      {showConfirmDelete ? (
+        <Backdrop width="500px">
+          <i
+            className="fas fa-times leave-modal"
+            onClick={() => setShowConfirmDelete(false)}
+          ></i>
+          <p>Are you sure want to delete {deleteTitle}?</p>
+          <button onClick={confirmDelete}>Delete</button>
         </Backdrop>
       ) : null}
 
@@ -76,8 +105,14 @@ const Admin = () => {
       {data.map((item, i) => (
         <div key={i} className="box">
           <ProductDetails data={item}>
-            <i className="far fa-edit icon" onClick={handleEdit}></i>
-            <i className="far fa-trash-alt icon"></i>
+            <i
+              className="far fa-edit icon"
+              onClick={() => console.log(item.productId)}
+            ></i>
+            <i
+              className="far fa-trash-alt icon"
+              onClick={() => handleDelete(item.productId, item.Name)}
+            ></i>
           </ProductDetails>
         </div>
       ))}

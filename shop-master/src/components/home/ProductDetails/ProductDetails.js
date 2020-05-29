@@ -3,7 +3,6 @@ import React from "react";
 import "./ProductDetails.css";
 
 const ProductDetails = ({ data, children }) => {
-  console.log(data);
   return (
     <div className="product-details">
       <img src={data.image} alt="" />
