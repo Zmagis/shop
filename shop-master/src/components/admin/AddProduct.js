@@ -53,13 +53,11 @@ const AddPrduct = (props) => {
     console.log("uploadImageHandler");
     setFile(e.target.files[0]);
   };
-<<<<<<< HEAD
-  console.log(file);
-  let today = new Date().toISOString().slice(0, 10)
-  console.log(today)
-=======
 
->>>>>>> basket
+  console.log(file);
+  let today = new Date().toISOString().slice(0, 10);
+  console.log(today);
+
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(file);
