@@ -117,7 +117,6 @@ const AddPrduct = (props) => {
             Upload an image
           </button>
           <input
-            // className={file !== "" ? "uploaded" : null}
             type="file"
             name="image"
             onChange={(e) => uploadImageHandler(e)}

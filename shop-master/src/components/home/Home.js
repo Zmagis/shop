@@ -9,6 +9,7 @@ import Backdrop from "../UI/backdrop/Backdrop";
 import Spinner from "../UI/Spinner/Spinner";
 
 const Home = (props) => {
+  console.log(props.products);
   const [showProductDetails, setShowProductDetails] = useState(false);
   const [selectedItem, setSelectedItem] = useState();
 
