@@ -26,8 +26,8 @@ const auth = (state = initialState, action) => {
       });
     case actionTypes.AUTH_LOGOUT:
       localStorage.clear();
+      window.location.reload(true);
       return updateObject(state, { loading: false, isAuthenticated: false });
-      window.location.reload(false);
 
     default:
       return state;

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 import * as actions from "../../store/actions";
 
 import "./Home.css";
@@ -13,16 +12,26 @@ const Home = (props) => {
   const [showProductDetails, setShowProductDetails] = useState(false);
   const [selectedItem, setSelectedItem] = useState();
 
-  console.log(props.products);
+  const [idBasket, setIdBasket] = useState("");
+  const [basketArr, setBasketArr] = useState([]);
 
   const { onFetchProducts } = props;
   useEffect(() => {
     onFetchProducts();
   }, [onFetchProducts]);
 
+  useEffect(() => {
+    console.log(idBasket);
+    if (idBasket !== "") {
+      setBasketArr([...basketArr, idBasket]);
+      localStorage.setItem("basket", JSON.stringify(basketArr));
+    }
+  }, [idBasket, basketArr]);
+  console.log(localStorage.getItem("basket"));
+
   const handleShow = (id) => {
     setShowProductDetails(true);
-    const clicked = props.products.filter((item) => item.productId === id);
+    const clicked = props.products.filter((item) => item.idProducts === id);
     setSelectedItem(clicked);
     console.log(clicked);
   };
@@ -43,17 +52,20 @@ const Home = (props) => {
       ) : null}
       <h1>Home</h1>
       <div className="container">
-        {!props.products ? (
+        {props.loading ? (
           <Spinner />
+        ) : !props.products ? (
+          <p>Nothing for sale yet</p>
         ) : (
           props.products.map((product, i) => (
             <Product
               key={i}
-              id={product.productId}
+              id={product.idProducts}
               name={product.Name}
               img={product.image}
               price={product.Price}
               handleShow={handleShow}
+              setIdBasket={setIdBasket}
             />
           ))
         )}
@@ -65,6 +77,7 @@ const Home = (props) => {
 const mapStateToProps = (state) => {
   return {
     products: state.home.products,
+    loading: state.home.loding,
   };
 };
 

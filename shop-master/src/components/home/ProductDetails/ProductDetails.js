@@ -3,12 +3,13 @@ import React from "react";
 import "./ProductDetails.css";
 
 const ProductDetails = ({ data, children }) => {
+  console.log(data);
   return (
     <div className="product-details">
-      <img src={data.img} alt="" />
+      <img src={data.image} alt="" />
       <div className="info">
         <h2>{data.Name}</h2>
-        <p>{data.description}</p>
+        <p>{data.Description}</p>
 
         <div className="bottom">
           <div>

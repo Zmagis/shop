@@ -1,0 +1,22 @@
+.basket {
+  max-width: 90vw;
+  margin: auto;
+}
+.basket table {
+  margin: auto;
+}
+.basket table,
+td {
+  border-collapse: collapse;
+}
+
+tbody,
+tbody td {
+  border: 1px solid black;
+}
+td {
+  min-width: 80px;
+}
+.basket img {
+  max-height: 80px;
+}
