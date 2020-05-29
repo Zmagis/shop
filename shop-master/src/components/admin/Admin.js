@@ -47,7 +47,7 @@ const Admin = (props) => {
   };
   const confirmDelete = () => {
     console.log(`confirmed ${deleteId}`);
-    axios.delete("/delete", {
+    axios.delete("/deleteproduct/" + deleteId , {
       data: { id: deleteId },
     });
     setShowConfirmDelete(false);
@@ -87,11 +87,11 @@ const Admin = (props) => {
           <ProductDetails data={item}>
             <i
               className="far fa-edit icon"
-              onClick={() => console.log(item.productId)}
+              onClick={() => console.log(item.idProducts)}
             ></i>
             <i
               className="far fa-trash-alt icon"
-              onClick={() => handleDelete(item.productId, item.Name)}
+              onClick={() => handleDelete(item.idProducts, item.Name)}
             ></i>
           </ProductDetails>
         </div>

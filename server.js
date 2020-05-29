@@ -220,6 +220,21 @@ app.post("/addproduct", upload.single("image"), (req, res, next) => {
   );
 });
 
+app.delete("/deleteproduct/:id", (req, res) => {
+  console.log(req.params.id);
+  let id = {
+    id: req.params.id
+  };
+  console.log(id);         
+  let sql =`DELETE FROM products WHERE idProducts = ${req.params.id}`;
+        let query = db.query(sql, (err, result) => {
+          if (err) throw err;
+          console.log(result);
+          res.status(200).json({ result: "product deleted" });
+        });
+});
+
+
 const port = 9000;
 
 app.listen(port, () => console.log(`server started on port ${port}`));
