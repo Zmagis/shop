@@ -1,56 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import axios from "axios";
+import * as actions from "../../store/actions";
 
 import "./Admin.css";
 
 import AddProduct from "./AddProduct";
 import Backdrop from "../UI/backdrop/Backdrop";
 import ProductDetails from "../home/ProductDetails/ProductDetails";
-import box from "../../img/box.jpg";
-import boxFriend from "../../img/box-friend.jpg";
-import out from "../../img/out.jpg";
-import wooden from "../../img/wooden.jpg";
-const data = [
-  {
-    productId: 1,
-    Name: "One",
-    Price: "453",
-    image: box,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-  {
-    productId: 2,
-    Name: "Two",
-    Price: "453",
-    image: boxFriend,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-  {
-    productId: 3,
-    Name: "Three",
-    Price: "453",
-    image: out,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-  {
-    productId: 4,
-    Name: "Four",
-    Price: "453",
-    image: wooden,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-];
 
-const Admin = () => {
+const Admin = (props) => {
   const [showAddForm, setShowAddForm] = useState(false);
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [deleteId, setDeleteId] = useState("");
   const [deleteTitle, setDeleteTitle] = useState("");
+
+  const { onFetchProducts } = props;
+
+  useEffect(() => {
+    onFetchProducts();
+  }, [onFetchProducts]);
+
+  let filteredArr;
+  if (props.products !== 0) {
+    console.log("hi");
+    let array = [...props.products];
+
+    filteredArr = array.filter(
+      (item) => item.user === localStorage.getItem("username")
+    );
+  }
 
   const handleAddForm = () => {
     setShowAddForm(!showAddForm);
@@ -102,7 +82,7 @@ const Admin = () => {
           ></i>
         </span>
       </h1>
-      {data.map((item, i) => (
+      {filteredArr.map((item, i) => (
         <div key={i} className="box">
           <ProductDetails data={item}>
             <i
@@ -120,4 +100,17 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+const mapStateToProps = (state) => {
+  return {
+    products: state.home.products,
+    loading: state.home.loding,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchProducts: () => dispatch(actions.initFetchProducts()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);
