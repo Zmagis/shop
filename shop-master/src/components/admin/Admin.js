@@ -8,6 +8,7 @@ import "./Admin.css";
 import AddProduct from "./AddProduct";
 import Backdrop from "../UI/backdrop/Backdrop";
 import ProductDetails from "../home/ProductDetails/ProductDetails";
+import EditProduct from "./EditProduct";
 
 const Admin = (props) => {
   const [showAddForm, setShowAddForm] = useState(false);
@@ -15,6 +16,10 @@ const Admin = (props) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [deleteId, setDeleteId] = useState("");
   const [deleteTitle, setDeleteTitle] = useState("");
+
+  const [showEdit, setShowEdit] = useState(false);
+  const [editId, setEditId] = useState("");
+  const [editProduct, setEditProduct] = useState(null);
 
   const { onFetchProducts } = props;
 
@@ -24,19 +29,22 @@ const Admin = (props) => {
 
   let filteredArr;
   if (props.products !== 0) {
-    console.log("hi");
     let array = [...props.products];
-
     filteredArr = array.filter(
       (item) => item.user === localStorage.getItem("username")
     );
   }
-
   const handleAddForm = () => {
     setShowAddForm(!showAddForm);
   };
-  const handleEdit = () => {
-    console.log("edit");
+
+  let itemToEdit;
+  const handleEdit = (id) => {
+    console.log(props.products);
+    itemToEdit = props.products.filter((item) => item.idProducts === id);
+    setShowEdit(true);
+    console.log(itemToEdit);
+    setEditProduct({ ...itemToEdit });
   };
 
   const handleDelete = (id, name) => {
@@ -47,7 +55,7 @@ const Admin = (props) => {
   };
   const confirmDelete = () => {
     console.log(`confirmed ${deleteId}`);
-    axios.delete("/deleteproduct/" + deleteId , {
+    axios.delete("/deleteproduct/" + deleteId, {
       data: { id: deleteId },
     });
     setShowConfirmDelete(false);
@@ -71,6 +79,13 @@ const Admin = (props) => {
           <button onClick={confirmDelete}>Delete</button>
         </Backdrop>
       ) : null}
+      {showEdit ? (
+        <EditProduct
+          id={editId}
+          setShowEdit={setShowEdit}
+          data={editProduct[0]}
+        />
+      ) : null}
 
       <h1>
         Add more items for sell{" "}
@@ -87,7 +102,7 @@ const Admin = (props) => {
           <ProductDetails data={item}>
             <i
               className="far fa-edit icon"
-              onClick={() => console.log(item.idProducts)}
+              onClick={() => handleEdit(item.idProducts)}
             ></i>
             <i
               className="far fa-trash-alt icon"
