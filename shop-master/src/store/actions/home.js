@@ -19,7 +19,7 @@ export const initFetchProducts = () => {
         if (response.data.length === 0) {
           dispatch(fetchProductsFail());
         } else {
-          dispatch(fetchProducts(response.data));
+          dispatch(fetchProducts(response.data.reverse()));
         }
       })
       .catch((error) => {

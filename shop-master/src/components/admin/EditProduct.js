@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Input from "../forms/Input";
+import Input from "../UI/Input";
 import Backdrop from "../UI/backdrop/Backdrop";
 
 const EditPrduct = (props) => {
@@ -77,19 +77,19 @@ const EditPrduct = (props) => {
     data.append("username", localStorage.username);
     data.append("date", today);
     console.log(data);
-    axios.post("http://localhost:9000/editproduct", data)
+    axios
+      .post("http://localhost:9000/editproduct", data)
       .then((result) => {
         if (result.status === 200) {
           alert("prodcut updated");
-        } else if (result.status === 204){
+        } else if (result.status === 204) {
           alert("product not exits");
         }
       })
       .catch((err) => {
         console.error(err);
       });
-      //nezinau kodel neveikia
-    //props.setShow(false);
+    props.setShowEdit(false);
   };
 
   const formElementArray = [];

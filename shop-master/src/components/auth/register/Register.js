@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 
-import Input from "../Input";
+import Input from "../../UI/Input";
 import * as actions from "../../../store/actions";
-import "../Form.css";
 
-const Login = (props) => {
+const Register = (props) => {
   const [formData, setFormData] = useState({
     username: {
       elementType: "input",
@@ -23,6 +22,14 @@ const Login = (props) => {
       },
       value: "",
     },
+    passwordConfirmation: {
+      elementType: "input",
+      elementConfig: {
+        type: "password",
+        placeholder: "Password Confirmation",
+      },
+      value: "",
+    },
   });
 
   const changeHandler = (e, identifier) => {
@@ -31,12 +38,19 @@ const Login = (props) => {
     updatedFormElement.value = e.target.value;
     updatedFormData[identifier] = updatedFormElement;
     setFormData(updatedFormData);
+    console.log(e.target.value);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    props.onAuth(formData.username.value, formData.password.value);
-    console.log(props.isAuth);
+    const { password, passwordConfirmation } = formData;
+    // Check if password and passwordConfirmation matches
+    if (password.value !== passwordConfirmation.value) {
+      alert("Passwords don't match");
+      console.log("submit");
+    } else {
+      props.onRegister(formData.username.value, formData.password.value);
+    }
   };
 
   const formElementArray = [];
@@ -46,7 +60,7 @@ const Login = (props) => {
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Register</h1>
       <form method="POST" onSubmit={submitHandler}>
         {formElementArray.map((element) => (
           <Input
@@ -58,14 +72,15 @@ const Login = (props) => {
           />
         ))}
         {props.error ? <p className="error">{props.errorMsg}</p> : null}
-        <button type="submit">Log In</button>
+        <button type="submit">Register</button>
       </form>
       <p className="txt-center">
-        Don't have an account? Register <a href="/register">here</a>
+        Already have an account? <a href="/login">Log in</a>
       </p>
     </div>
   );
 };
+
 const mapStateToProps = (state) => {
   return {
     loading: state.auth.loading,
@@ -77,7 +92,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAuth: (email, password) => dispatch(actions.auth(email, password)),
+    onRegister: (email, password) =>
+      dispatch(actions.register(email, password)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

@@ -3,7 +3,8 @@
   margin: auto;
 }
 .basket table {
-  margin: auto;
+  margin: 40px auto;
+  min-width: 50%;
 }
 .basket table,
 td {
@@ -17,6 +18,9 @@ tbody td {
 }
 td {
   min-width: 100px;
+}
+th {
+  padding-bottom: 10px;
 }
 .basket img {
   max-height: 100px;

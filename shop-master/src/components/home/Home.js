@@ -36,7 +36,8 @@ const Home = (props) => {
     setSelectedItem(clicked);
     console.log(clicked);
   };
-
+  const hidden =
+    localStorage.getItem("username") === null ? null : { visibility: "hidden" };
   return (
     <div>
       {showProductDetails ? (
@@ -46,8 +47,12 @@ const Home = (props) => {
             onClick={() => setShowProductDetails(false)}
           ></i>
           <ProductDetails data={selectedItem[0]}>
-            <i className="fas fa-shopping-basket icon"></i>
-            <i className="far fa-credit-card icon"></i>
+            <i
+              style={hidden}
+              className="fas fa-shopping-basket icon"
+              onClick={() => handleAddToBasket(selectedItem[0].idProducts)}
+            ></i>
+            <i style={hidden} className="far fa-credit-card icon"></i>
           </ProductDetails>
         </Backdrop>
       ) : null}
@@ -66,8 +71,6 @@ const Home = (props) => {
               name={product.Name}
               img={product.image}
               price={product.Price}
-              user={product.user}
-              date={product.date}
               handleShow={handleShow}
               handleAddToBasket={handleAddToBasket}
             />

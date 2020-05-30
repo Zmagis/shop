@@ -46,6 +46,7 @@
 .icons {
   width: 80px;
   display: flex;
+  /* margin: auto; */
 }
 .icon {
   box-sizing: border-box;

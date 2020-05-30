@@ -4,12 +4,12 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import Navbar from "./components/navbar/Navbar";
-import Register from "./components/forms/register/Register";
-import Logout from "./components/logout/Logout";
+import Register from "./components/auth/register/Register";
+import Logout from "./components/auth/logout/Logout";
 import Admin from "./components/admin/Admin";
-import Login from "./components/forms/login/Login";
+import Login from "./components/auth/login/Login";
 import Home from "./components/home/Home";
-import Basket from "./components/admin/basket/Basket";
+import Basket from "./components/basket/Basket";
 
 import "./App.css";
 

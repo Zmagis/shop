@@ -3,6 +3,7 @@ import React from "react";
 import "./ProductDetails.css";
 
 const ProductDetails = ({ data, children }) => {
+  console.log(data);
   return (
     <div className="product-details">
       <img src={data.image} alt="" />
@@ -13,9 +14,14 @@ const ProductDetails = ({ data, children }) => {
         <div className="bottom">
           <div>
             <p>Price: {data.Price} €</p>
-            <p>Views: ___</p>
+            <p>By: {data.user}</p>
+            <p>Posted: {data.date}</p>
+            <br />
+            <p>Viewed by: ___</p>
           </div>
-          <div>{children}</div>
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
+            {children}
+          </div>
         </div>
       </div>
     </div>

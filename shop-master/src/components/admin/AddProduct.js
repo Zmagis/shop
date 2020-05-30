@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Input from "../forms/Input";
+import Input from "../UI/Input";
 
 const AddPrduct = (props) => {
   const [formData, setFormData] = useState({
