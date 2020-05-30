@@ -1,11 +1,6 @@
 import React from "react";
 
 const Product = (props) => {
-  const handleAddToBasket = () => {
-    console.log(props.id);
-    props.setIdBasket(props.id);
-  };
-
   return (
     <div className="product">
       <div className="img-container">
@@ -24,7 +19,7 @@ const Product = (props) => {
           <div className="icon">
             <i
               className="fas fa-shopping-basket"
-              onClick={handleAddToBasket}
+              onClick={() => props.handleAddToBasket(props.id)}
               // key={product.idProducts}
             ></i>
           </div>
