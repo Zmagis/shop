@@ -12,14 +12,10 @@ const Home = (props) => {
   const [showProductDetails, setShowProductDetails] = useState(false);
   const [selectedItem, setSelectedItem] = useState();
 
-  const [basketArr, setBasketArr] = useState([]);
-
   const { onFetchProducts } = props;
   useEffect(() => {
     onFetchProducts();
   }, [onFetchProducts]);
-
-  console.log(localStorage.getItem("basket"));
 
   if (localStorage.getItem("basket") === null) {
     localStorage.setItem("basket", []);
@@ -73,7 +69,6 @@ const Home = (props) => {
               user={product.user}
               date={product.date}
               handleShow={handleShow}
-              // setIdBasket={setIdBasket}
               handleAddToBasket={handleAddToBasket}
             />
           ))
