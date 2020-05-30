@@ -14,10 +14,12 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import homeReducer from "./store/reducers/home";
 import authReducer from "./store/reducers/auth";
+import basketReducer from "./store/reducers/basket";
 
 const rootReducer = combineReducers({
   home: homeReducer,
   auth: authReducer,
+  basket: basketReducer,
 });
 
 const composeEnhancers =

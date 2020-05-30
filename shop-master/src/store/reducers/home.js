@@ -7,6 +7,7 @@ const initialState = {
   // (this will help to show spinner when needed)
   loading: false,
   error: false,
+  basket: [],
 };
 
 const home = (state = initialState, action) => {

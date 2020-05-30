@@ -9,11 +9,9 @@ import Backdrop from "../UI/backdrop/Backdrop";
 import Spinner from "../UI/Spinner/Spinner";
 
 const Home = (props) => {
-  console.log(props.products);
   const [showProductDetails, setShowProductDetails] = useState(false);
   const [selectedItem, setSelectedItem] = useState();
 
-  const [idBasket, setIdBasket] = useState("");
   const [basketArr, setBasketArr] = useState([]);
 
   const { onFetchProducts } = props;
@@ -21,14 +19,20 @@ const Home = (props) => {
     onFetchProducts();
   }, [onFetchProducts]);
 
-  useEffect(() => {
-    console.log(idBasket);
-    if (idBasket !== "") {
-      setBasketArr([...basketArr, idBasket]);
-      localStorage.setItem("basket", JSON.stringify(basketArr));
-    }
-  }, [idBasket, basketArr]);
   console.log(localStorage.getItem("basket"));
+
+  if (localStorage.getItem("basket") === null) {
+    localStorage.setItem("basket", []);
+  }
+
+  const handleAddToBasket = (id) => {
+    if (!localStorage.getItem("basket").includes(id)) {
+      console.log("add");
+      props.onAddToBasket(id);
+    } else {
+      console.log("already there");
+    }
+  };
 
   const handleShow = (id) => {
     setShowProductDetails(true);
@@ -51,6 +55,7 @@ const Home = (props) => {
           </ProductDetails>
         </Backdrop>
       ) : null}
+
       <h1>Home</h1>
       <div className="container">
         {props.loading ? (
@@ -68,7 +73,8 @@ const Home = (props) => {
               user={product.user}
               date={product.date}
               handleShow={handleShow}
-              setIdBasket={setIdBasket}
+              // setIdBasket={setIdBasket}
+              handleAddToBasket={handleAddToBasket}
             />
           ))
         )}
@@ -81,19 +87,15 @@ const mapStateToProps = (state) => {
   return {
     products: state.home.products,
     loading: state.home.loding,
+    basket: state.basket.basket,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onFetchProducts: () => dispatch(actions.initFetchProducts()),
+    onAddToBasket: (id) => dispatch(actions.addItemToBasket(id)),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
-
-// // route to get product
-// axios.get(`/api/product`).then((res) => {
-//   const product = res.data;
-//   console.log(product);
-// });
