@@ -237,6 +237,57 @@ app.delete("/deleteproduct/:id", (req, res) => {
           res.status(200).json({ result: "product deleted" });
         });
 });
+
+
+
+//rout for update product 
+app.post("/editproduct", upload.single("image"), (req, res, next) => {
+  //console.log("req.file: " + req.file);
+  if (req.body.image){
+    var updateInput = {
+      Name: req.body.title,
+      Price: req.body.price,
+      Description: req.body.description,
+      Keywords: req.body.keywords,
+      image: req.body.image,
+      user: req.body.username,
+      date: req.body.date,
+      idProducts: req.body.id
+    };
+  } else {
+    var updateInput = {
+    Name: req.body.title,
+    Price: req.body.price,
+    Description: req.body.description,
+    Keywords: req.body.keywords,
+    image: req.file.path,
+    user: req.body.username,
+    date: req.body.date,
+    idProducts: req.body.id
+  };
+};
+  db.query(
+    `SELECT idProducts FROM products WHERE idProducts = ${updateInput.idProducts}`,
+    async function (error, results) {
+      if (error) {
+        res.status(400).json({ result: "error" });
+      } else if (results.length == 0) {
+          res.status(204).json({ result: "Product not exits" });
+        } else {
+            console.log(updateInput);
+            let sql = `UPDATE products SET ? WHERE idProducts=${updateInput.idProducts}`;
+            let query = db.query(sql, updateInput, (err, result) => {
+              if (err) throw err;
+              console.log(result);
+              res.status(200).json({ result: "product updated" });
+            });
+          }
+        }
+  );
+});
+
+
+
 //route for stripe payment
 app.post("/payment", (req, res) =>{
   const {products, token} = req.body;

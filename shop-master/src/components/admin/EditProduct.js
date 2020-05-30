@@ -73,12 +73,23 @@ const EditPrduct = (props) => {
     data.append("keywords", formData.keywords.value);
     data.append("title", formData.title.value);
     data.append("description", formData.description.value);
+    data.append("id", props.data.idProducts);
     data.append("username", localStorage.username);
     data.append("date", today);
     console.log(data);
-    axios.put("http://localhost:9000/editproduct", data);
-
-    props.setShow(false);
+    axios.post("http://localhost:9000/editproduct", data)
+      .then((result) => {
+        if (result.status === 200) {
+          alert("prodcut updated");
+        } else if (result.status === 204){
+          alert("product not exits");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+      //nezinau kodel neveikia
+    //props.setShow(false);
   };
 
   const formElementArray = [];
