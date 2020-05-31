@@ -15,11 +15,13 @@ import * as serviceWorker from "./serviceWorker";
 import homeReducer from "./store/reducers/home";
 import authReducer from "./store/reducers/auth";
 import basketReducer from "./store/reducers/basket";
+import adminReducer from "./store/reducers/admin";
 
 const rootReducer = combineReducers({
   home: homeReducer,
   auth: authReducer,
   basket: basketReducer,
+  admin: adminReducer,
 });
 
 const composeEnhancers =

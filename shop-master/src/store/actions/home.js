@@ -14,7 +14,7 @@ export const initFetchProducts = () => {
   return (dispatch) => {
     dispatch(fetchProductsStart());
     axios
-      .get("/api/product")
+      .get("api/product")
       .then((response) => {
         if (response.data.length === 0) {
           dispatch(fetchProductsFail());

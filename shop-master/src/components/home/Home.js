@@ -8,11 +8,17 @@ import Product from "./Product";
 import Backdrop from "../UI/backdrop/Backdrop";
 import Spinner from "../UI/Spinner/Spinner";
 
-const Home = (props) => {
+const Home = ({
+  products,
+  loading,
+  basket,
+  onFetchProducts,
+  onAddToBasket,
+  onInitBasket,
+}) => {
   const [showProductDetails, setShowProductDetails] = useState(false);
   const [selectedItem, setSelectedItem] = useState();
 
-  const { onFetchProducts } = props;
   useEffect(() => {
     onFetchProducts();
   }, [onFetchProducts]);
@@ -22,9 +28,16 @@ const Home = (props) => {
   }
 
   const handleAddToBasket = (id) => {
+    if (localStorage.getItem("basket") === null) {
+      localStorage.setItem("basket", JSON.stringify([]));
+    }
     if (!localStorage.getItem("basket").includes(id)) {
+      if (localStorage.getItem("basket").length >= 1 && basket.length === 0) {
+        console.log(basket);
+        onInitBasket();
+      }
       console.log("add");
-      props.onAddToBasket(id);
+      onAddToBasket(id);
     } else {
       console.log("already there");
     }
@@ -32,12 +45,13 @@ const Home = (props) => {
 
   const handleShow = (id) => {
     setShowProductDetails(true);
-    const clicked = props.products.filter((item) => item.idProducts === id);
+    const clicked = products.filter((item) => item.idProducts === id);
     setSelectedItem(clicked);
-    console.log(clicked);
   };
+
   const hidden =
     localStorage.getItem("username") === null ? null : { visibility: "hidden" };
+
   return (
     <div>
       {showProductDetails ? (
@@ -59,12 +73,12 @@ const Home = (props) => {
 
       <h1>Home</h1>
       <div className="container">
-        {props.loading ? (
+        {loading ? (
           <Spinner />
-        ) : props.products.length === 0 ? (
+        ) : products.length === 0 ? (
           <p>Nothing for sale yet</p>
         ) : (
-          props.products.map((product, i) => (
+          products.map((product, i) => (
             <Product
               key={i}
               id={product.idProducts}
@@ -93,6 +107,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onFetchProducts: () => dispatch(actions.initFetchProducts()),
     onAddToBasket: (id) => dispatch(actions.addItemToBasket(id)),
+    onInitBasket: () => dispatch(actions.initBasket()),
   };
 };
 

@@ -6,9 +6,9 @@ import * as actions from "../../store/actions";
 
 import "./Navbar.css";
 
-const Navbar = (props) => {
+const Navbar = ({ onLogout }) => {
   const handleLogout = () => {
-    props.onLogout();
+    onLogout();
   };
 
   let links;

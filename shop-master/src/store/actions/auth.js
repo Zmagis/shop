@@ -22,7 +22,7 @@ export const auth = (username, password) => {
     dispatch(authStart());
     const authData = { username, password };
     axios
-      .post("http://localhost:9000/login", authData)
+      .post("/login", authData)
       .then((result) => {
         if (result.status === 200) {
           dispatch(authSuccess(username));
@@ -43,7 +43,7 @@ export const register = (username, password) => {
     dispatch(authStart());
     const registerData = { username, password };
     axios
-      .post("http://localhost:9000/create", registerData)
+      .post("/create", registerData)
       .then((result) => {
         if (result.status === 200) {
           dispatch(authSuccess(username));

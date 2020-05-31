@@ -8,7 +8,7 @@ import * as actions from "../../store/actions";
 import "./Basket.css";
 import Stripe from "stripe";
 
-const Basket = ({ products, onFetchProducts }) => {
+const Basket = ({ products, onFetchProducts, onRemoveItemFromBasket }) => {
   useEffect(() => {
     onFetchProducts();
   }, [onFetchProducts]);
@@ -24,7 +24,7 @@ const Basket = ({ products, onFetchProducts }) => {
       token,
       //product
     };
-    axios.post("http://localhost:9000/payment", body).then((result) => {
+    axios.post("/payment", body).then((result) => {
       if (result.status === 200) {
         alert("success");
       } else {
@@ -33,14 +33,17 @@ const Basket = ({ products, onFetchProducts }) => {
     });
   };
 
+  const removeHandler = (id) => {
+    onRemoveItemFromBasket(id);
+    // console.log(id);
+  };
+
   if (ids !== null) {
     filteredArr = products.filter((item) => ids.includes(item.idProducts));
 
     filteredArr.map((item) => {
       total = total + item.Price;
     });
-
-    console.log(total);
 
     filteredItems =
       filteredArr.length === 0 ? (
@@ -69,6 +72,12 @@ const Basket = ({ products, onFetchProducts }) => {
                 </td>
                 <td>
                   <p>{product.Price}</p>
+                </td>
+                <td style={{ border: "1px solid transparent" }}>
+                  <i
+                    className="fas fa-minus remove"
+                    onClick={() => removeHandler(product.idProducts)}
+                  ></i>
                 </td>
               </tr>
             ))}
@@ -108,11 +117,13 @@ const mapStateToProps = (state) => {
   return {
     products: state.home.products,
     loading: state.home.loding,
+    basket: state.basket.basket,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     onFetchProducts: () => dispatch(actions.initFetchProducts()),
+    onRemoveItemFromBasket: (id) => dispatch(actions.removeItemFromBasket(id)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Basket);

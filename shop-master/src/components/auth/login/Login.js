@@ -5,7 +5,7 @@ import Input from "../../UI/Input";
 import * as actions from "../../../store/actions";
 import "../Form.css";
 
-const Login = (props) => {
+const Login = ({ loading, error, errorMsg, onAuth }) => {
   const [formData, setFormData] = useState({
     username: {
       elementType: "input",
@@ -35,8 +35,7 @@ const Login = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    props.onAuth(formData.username.value, formData.password.value);
-    console.log(props.isAuth);
+    onAuth(formData.username.value, formData.password.value);
   };
 
   const formElementArray = [];
@@ -57,7 +56,7 @@ const Login = (props) => {
             changeHandler={(e) => changeHandler(e, element.id)}
           />
         ))}
-        {props.error ? <p className="error">{props.errorMsg}</p> : null}
+        {error ? <p className="error">{errorMsg}</p> : null}
         <button type="submit">Log In</button>
       </form>
       <p className="txt-center">

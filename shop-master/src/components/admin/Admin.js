@@ -10,7 +10,7 @@ import Backdrop from "../UI/backdrop/Backdrop";
 import ProductDetails from "../home/ProductDetails/ProductDetails";
 import EditProduct from "./EditProduct";
 
-const Admin = (props) => {
+const Admin = ({ products, onFetchProducts }) => {
   const [showAddForm, setShowAddForm] = useState(false);
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
@@ -21,15 +21,13 @@ const Admin = (props) => {
   const [editId, setEditId] = useState("");
   const [editProduct, setEditProduct] = useState(null);
 
-  const { onFetchProducts } = props;
-
   useEffect(() => {
     onFetchProducts();
   }, [onFetchProducts]);
 
   let filteredArr;
-  if (props.products !== 0) {
-    let array = [...props.products];
+  if (products !== 0) {
+    let array = [...products];
     filteredArr = array.filter(
       (item) => item.user === localStorage.getItem("username")
     );
@@ -40,8 +38,8 @@ const Admin = (props) => {
 
   let itemToEdit;
   const handleEdit = (id) => {
-    console.log(props.products);
-    itemToEdit = props.products.filter((item) => item.idProducts === id);
+    console.log(products);
+    itemToEdit = products.filter((item) => item.idProducts === id);
     setShowEdit(true);
     console.log(itemToEdit);
     setEditProduct({ ...itemToEdit });

@@ -1,31 +1,31 @@
 import React from "react";
 
-const Product = (props) => {
+const Product = ({ img, price, id, handleAddToBasket, handleShow, name }) => {
   const hidden =
     localStorage.getItem("username") === null ? null : { visibility: "hidden" };
 
   return (
     <div className="product">
       <div className="img-container">
-        <img src={props.img} alt="" />
+        <img src={img} alt="" />
       </div>
 
       <div className="product-home-info">
         <div className="text">
-          <h3>{props.name}</h3>
-          <p>Price: {props.price} €</p>
+          <h3>{name}</h3>
+          <p>Price: {price} €</p>
         </div>
 
         <div className="icons">
           <div
             style={hidden}
             className="icon"
-            onClick={() => props.handleAddToBasket(props.id)}
+            onClick={() => handleAddToBasket(id)}
           >
             <i className="fas fa-shopping-basket"></i>
           </div>
 
-          <div className="icon" onClick={() => props.handleShow(props.id)}>
+          <div className="icon" onClick={() => handleShow(id)}>
             <i className="fas fa-arrow-right"></i>
           </div>
         </div>

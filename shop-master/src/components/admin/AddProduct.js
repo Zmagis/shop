@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Input from "../UI/Input";
+import { connect } from "axios";
 
-const AddPrduct = (props) => {
+import Input from "../UI/Input";
+import * as actions from "../../store/actions";
+
+const AddProduct = ({ setShow, onSendNew }) => {
   const [formData, setFormData] = useState({
     title: {
       elementType: "input",
@@ -46,11 +49,9 @@ const AddPrduct = (props) => {
     updatedFormElement.value = e.target.value;
     updatedFormData[identifier] = updatedFormElement;
     setFormData(updatedFormData);
-    console.log(e.target.value);
   };
-  console.log(formData.price);
-  const uploadImageHandler = (e, identifier) => {
-    console.log("uploadImageHandler");
+
+  const uploadImageHandler = (e) => {
     setFile(e.target.files[0]);
   };
 
@@ -70,9 +71,9 @@ const AddPrduct = (props) => {
     data.append("description", formData.description.value);
     data.append("username", localStorage.username);
     data.append("date", today);
-    console.log(data);
+
     axios
-      .post("http://localhost:9000/addproduct", data)
+      .post("/addproduct", data)
       .then((result) => {
         if (result.status === 200) {
           alert("prodcut added");
@@ -85,7 +86,7 @@ const AddPrduct = (props) => {
       .catch((err) => {
         console.error(err);
       });
-    props.setShow(false);
+    setShow(false);
     setFile("");
   };
 
@@ -131,4 +132,26 @@ const AddPrduct = (props) => {
   );
 };
 
-export default AddPrduct;
+// const mapStateToProps = (state) => {
+//   return {
+//     loading: state.admin.loading,
+//   };
+// };
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     onSentNew: (d) => dispatch(actions.initSentNewProduct(d)),
+//   };
+// };
+const mapStateToProps = (state) => {
+  return {
+    loading: state.admin.loding,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSendNew: () => dispatch(actions.initSentNewProduct()),
+  };
+};
+export default AddProduct;

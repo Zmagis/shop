@@ -25,7 +25,7 @@ const auth = (state = initialState, action) => {
         errorMsg: action.errorMsg,
       });
     case actionTypes.AUTH_LOGOUT:
-      localStorage.clear();
+      localStorage.removeItem("username");
       window.location.reload(true);
       return updateObject(state, { loading: false, isAuthenticated: false });
 

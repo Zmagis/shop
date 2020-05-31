@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Input from "../../UI/Input";
 import * as actions from "../../../store/actions";
 
-const Register = (props) => {
+const Register = ({ error, errorMsg, onRegister }) => {
   const [formData, setFormData] = useState({
     username: {
       elementType: "input",
@@ -49,7 +49,7 @@ const Register = (props) => {
       alert("Passwords don't match");
       console.log("submit");
     } else {
-      props.onRegister(formData.username.value, formData.password.value);
+      onRegister(formData.username.value, formData.password.value);
     }
   };
 
@@ -71,7 +71,7 @@ const Register = (props) => {
             changeHandler={(e) => changeHandler(e, element.id)}
           />
         ))}
-        {props.error ? <p className="error">{props.errorMsg}</p> : null}
+        {error ? <p className="error">{errorMsg}</p> : null}
         <button type="submit">Register</button>
       </form>
       <p className="txt-center">

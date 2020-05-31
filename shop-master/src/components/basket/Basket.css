@@ -30,3 +30,13 @@ th {
   display: flex;
   margin: auto;
 }
+.remove {
+  color: red;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.remove:hover {
+  background-color: rgba(143, 143, 143, 0.089);
+  border-radius: 8px;
+}

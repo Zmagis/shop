@@ -78,7 +78,7 @@ const EditPrduct = (props) => {
     data.append("date", today);
     console.log(data);
     axios
-      .post("http://localhost:9000/editproduct", data)
+      .post("/editproduct", data)
       .then((result) => {
         if (result.status === 200) {
           alert("prodcut updated");
