@@ -6,7 +6,6 @@ import StripeCheckout from "react-stripe-checkout";
 import * as actions from "../../store/actions";
 
 import "./Basket.css";
-import Stripe from "stripe";
 
 const Basket = ({ products, onFetchProducts, onRemoveItemFromBasket }) => {
   useEffect(() => {
@@ -16,17 +15,18 @@ const Basket = ({ products, onFetchProducts, onRemoveItemFromBasket }) => {
   let filteredArr;
   let filteredItems;
   let total = 0;
-
   let ids = localStorage.getItem("basket");
-
   const makePayment = (token) => {
     const body = {
       token,
-      //product
+      products,
+      total
     };
-    axios.post("/payment", body).then((result) => {
+    axios.post("/payment", body)
+    .then((result) => {
       if (result.status === 200) {
         alert("success");
+        console.log(result);
       } else {
         console.log("some error");
       }
@@ -102,7 +102,7 @@ const Basket = ({ products, onFetchProducts, onRemoveItemFromBasket }) => {
           stripeKey="pk_test_OtPH56R0K9McMN5SdhabDEKC"
           token={makePayment}
           name="testas"
-          amount="10*10"
+          amount={total * 100}
           shippingAddress
           billingAddress
         >

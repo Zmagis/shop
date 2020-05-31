@@ -290,30 +290,32 @@ app.post("/editproduct", upload.single("image"), (req, res, next) => {
 
 //route for stripe payment
 app.post("/payment", (req, res) =>{
-  const {products, token} = req.body;
-  //console.log("PRODUCT", product);
-  //console.log("PRICE", product.pirce);
+  const {products, token, total} = req.body;
+  console.log("price", total);
+  console.log("PRODUCT", products);
+  console.log("token", token.card);
   const idempontencyKey = uuidV4
 
   return stripe.customers.create({
     email:token.email,
     source: token.id
-
   }).then(customer => {
     stripe.charges.create({
-      amount: product.price * 100,
-      currenry: 'eur',
+      amount: total * 100,
+      currency: 'eur',
       customer: customer.id,
       receipt_email: token.email,
-      //description: `purchase of ${product.name}`,
+      description: `${products}`,
       shipping: {
         name: token.card.name,
-        adress: {
-          country: token.card.address_country
+        address: {
+          country: token.card.address_country,
+          line1: token.card.address_line1
         }
       }
-    }, {idempontencyKey})
-  }).then(result => res.status(200).json(result))
+    })
+  })
+  .then(result => res.status(200).json(result))
   .catch(err => console.log(err) )
 
 })
