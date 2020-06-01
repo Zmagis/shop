@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./ProductDetails.css";
 
 const ProductDetails = ({ data, children }) => {
@@ -17,7 +16,7 @@ const ProductDetails = ({ data, children }) => {
             <p>By: {data.user}</p>
             <p>Posted: {data.date}</p>
             <br />
-            <p>Viewed by: ___</p>
+            <p>Views: {data.views}</p>
           </div>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             {children}

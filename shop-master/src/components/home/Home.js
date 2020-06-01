@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
-
 import "./Home.css";
+import axios from "axios";
 import ProductDetails from "./ProductDetails/ProductDetails";
 import Product from "./Product";
 import Backdrop from "../UI/backdrop/Backdrop";
@@ -47,6 +47,7 @@ const Home = ({
     setShowProductDetails(true);
     const clicked = products.filter((item) => item.idProducts === id);
     setSelectedItem(clicked);
+    axios.post("/view", clicked);
   };
 
   const hidden =

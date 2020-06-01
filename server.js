@@ -91,7 +91,8 @@ db.query("CREATE DATABASE IF NOT EXISTS sys", function (err) {
         "Keywords TEXT(500)," +
         "image VARCHAR(250)," +
         "user TEXT(500)," +
-        "date TEXT(500)" +
+        "date TEXT(500)," +
+        "views INT DEFAULT 0" +
         ")",
       function (err) {
         if (err) throw err;
@@ -285,6 +286,18 @@ app.post("/editproduct", upload.single("image"), (req, res, next) => {
         }
   );
 });
+
+
+//count for views
+app.post("/view", (req, res)=>{
+  let data = req.body
+  let sql = `UPDATE products SET views=views+1 WHERE idProducts=${data[0].idProducts}`;
+  let query = db.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log(result);
+    //res.status(200).json({ result: "+++" });
+  });
+})
 
 
 
