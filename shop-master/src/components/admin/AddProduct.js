@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { connect } from "axios";
+import { connect } from "react-redux";
 
 import Input from "../UI/Input";
 import * as actions from "../../store/actions";
@@ -55,14 +54,10 @@ const AddProduct = ({ setShow, onSendNew }) => {
     setFile(e.target.files[0]);
   };
 
-  console.log(file);
   let today = new Date().toISOString().slice(0, 10);
-  console.log(today);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(file);
-    console.log(formData);
     const data = new FormData();
     data.append("image", file);
     data.append("price", formData.price.value);
@@ -71,21 +66,7 @@ const AddProduct = ({ setShow, onSendNew }) => {
     data.append("description", formData.description.value);
     data.append("username", localStorage.username);
     data.append("date", today);
-
-    axios
-      .post("/addproduct", data)
-      .then((result) => {
-        if (result.status === 200) {
-          alert("prodcut added");
-        } else if (result.status === 204) {
-          alert("Product already exits");
-        } else {
-          console.log("some error");
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    onSendNew(data);
     setShow(false);
     setFile("");
   };
@@ -132,17 +113,6 @@ const AddProduct = ({ setShow, onSendNew }) => {
   );
 };
 
-// const mapStateToProps = (state) => {
-//   return {
-//     loading: state.admin.loading,
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onSentNew: (d) => dispatch(actions.initSentNewProduct(d)),
-//   };
-// };
 const mapStateToProps = (state) => {
   return {
     loading: state.admin.loding,
@@ -151,7 +121,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSendNew: () => dispatch(actions.initSentNewProduct()),
+    onSendNew: (data) => dispatch(actions.initSentNewProduct(data)),
   };
 };
-export default AddProduct;
+export default connect(mapStateToProps, mapDispatchToProps)(AddProduct);

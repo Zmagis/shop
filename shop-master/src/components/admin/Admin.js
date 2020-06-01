@@ -18,7 +18,6 @@ const Admin = ({ products, onFetchProducts }) => {
   const [deleteTitle, setDeleteTitle] = useState("");
 
   const [showEdit, setShowEdit] = useState(false);
-  const [editId, setEditId] = useState("");
   const [editProduct, setEditProduct] = useState(null);
 
   useEffect(() => {
@@ -38,21 +37,17 @@ const Admin = ({ products, onFetchProducts }) => {
 
   let itemToEdit;
   const handleEdit = (id) => {
-    console.log(products);
     itemToEdit = products.filter((item) => item.idProducts === id);
     setShowEdit(true);
-    console.log(itemToEdit);
     setEditProduct({ ...itemToEdit });
   };
 
   const handleDelete = (id, name) => {
-    console.log(`delete ${id}`);
     setShowConfirmDelete(true);
     setDeleteTitle(name);
     setDeleteId(id);
   };
   const confirmDelete = () => {
-    console.log(`confirmed ${deleteId}`);
     axios.delete("/deleteproduct/" + deleteId, {
       data: { id: deleteId },
     });
@@ -78,11 +73,7 @@ const Admin = ({ products, onFetchProducts }) => {
         </Backdrop>
       ) : null}
       {showEdit ? (
-        <EditProduct
-          id={editId}
-          setShowEdit={setShowEdit}
-          data={editProduct[0]}
-        />
+        <EditProduct setShowEdit={setShowEdit} data={editProduct[0]} />
       ) : null}
 
       <h1>

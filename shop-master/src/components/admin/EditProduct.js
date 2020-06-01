@@ -4,7 +4,6 @@ import Input from "../UI/Input";
 import Backdrop from "../UI/backdrop/Backdrop";
 
 const EditPrduct = (props) => {
-  console.log(props.data);
   const [formData, setFormData] = useState({
     title: {
       elementType: "input",
@@ -52,21 +51,16 @@ const EditPrduct = (props) => {
     updatedFormElement.value = e.target.value;
     updatedFormData[identifier] = updatedFormElement;
     setFormData(updatedFormData);
-    console.log(e.target.value);
   };
 
   const uploadImageHandler = (e) => {
     setFile(e.target.files[0]);
   };
 
-  console.log(file);
   let today = new Date().toISOString().slice(0, 10);
-  console.log(today);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(file);
-    console.log(formData);
     const data = new FormData();
     data.append("image", file);
     data.append("price", formData.price.value);
@@ -76,7 +70,6 @@ const EditPrduct = (props) => {
     data.append("id", props.data.idProducts);
     data.append("username", localStorage.username);
     data.append("date", today);
-    console.log(data);
     axios
       .post("/editproduct", data)
       .then((result) => {
@@ -87,7 +80,7 @@ const EditPrduct = (props) => {
         }
       })
       .catch((err) => {
-        console.error(err);
+        alert(err);
       });
     props.setShowEdit(false);
   };

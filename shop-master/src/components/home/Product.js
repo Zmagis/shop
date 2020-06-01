@@ -3,7 +3,12 @@ import React from "react";
 const Product = ({ img, price, id, handleAddToBasket, handleShow, name }) => {
   const hidden =
     localStorage.getItem("username") === null ? null : { visibility: "hidden" };
+  let basketArr = JSON.parse(localStorage.getItem("basket"));
 
+  let greenBasket = null;
+  if (basketArr.includes(id)) {
+    greenBasket = { color: "green" };
+  }
   return (
     <div className="product">
       <div className="img-container">
@@ -22,7 +27,7 @@ const Product = ({ img, price, id, handleAddToBasket, handleShow, name }) => {
             className="icon"
             onClick={() => handleAddToBasket(id)}
           >
-            <i className="fas fa-shopping-basket"></i>
+            <i className="fas fa-shopping-basket" style={greenBasket}></i>
           </div>
 
           <div className="icon" onClick={() => handleShow(id)}>
