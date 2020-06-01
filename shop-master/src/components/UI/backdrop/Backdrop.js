@@ -4,7 +4,7 @@ import "./Backdrop.css";
 
 const Backdrop = (props) => (
   <div className="background">
-    <div className="modal" style={{ width: props.width }}>
+    <div className="modal " style={{ width: props.width }}>
       {props.children}
     </div>
   </div>

@@ -19,7 +19,7 @@ const Basket = ({ products, onFetchProducts, onRemoveItemFromBasket }) => {
   const makePayment = (token) => {
     const body = {
       token,
-      products,
+      ids,
       total,
     };
     axios.post("/payment", body).then((result) => {

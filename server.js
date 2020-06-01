@@ -303,9 +303,9 @@ app.post("/view", (req, res)=>{
 
 //route for stripe payment
 app.post("/payment", (req, res) =>{
-  const {products, token, total} = req.body;
+  const {ids, token, total} = req.body;
   console.log("price", total);
-  console.log("PRODUCT", products);
+  console.log("PRODUCT id's", ids);
   console.log("token", token.card);
   const idempontencyKey = uuidV4
 
@@ -318,7 +318,7 @@ app.post("/payment", (req, res) =>{
       currency: 'eur',
       customer: customer.id,
       receipt_email: token.email,
-      description: `${products}`,
+      description: `Purchased products ids:${ids}`,
       shipping: {
         name: token.card.name,
         address: {
