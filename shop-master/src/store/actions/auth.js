@@ -33,7 +33,7 @@ export const auth = (username, password) => {
         }
       })
       .catch((err) => {
-        console.error(err);
+        alert(err);
       });
   };
 };
@@ -54,7 +54,7 @@ export const register = (username, password) => {
         }
       })
       .catch((err) => {
-        console.error(err);
+        alert(err);
       });
   };
 };

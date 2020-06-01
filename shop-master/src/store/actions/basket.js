@@ -9,6 +9,5 @@ export const addItemToBasket = (id) => {
 };
 
 export const removeItemFromBasket = (id) => {
-  console.log(id);
   return { type: actionTypes.REMOVE_ITEM_FROM_BASKET, id };
 };

@@ -3,10 +3,12 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions";
 
 import "./Home.css";
+
 import ProductDetails from "./ProductDetails/ProductDetails";
 import Product from "./Product";
 import Backdrop from "../UI/backdrop/Backdrop";
 import Spinner from "../UI/Spinner/Spinner";
+import Input from "../UI/Input";
 
 const Home = ({
   products,
@@ -18,6 +20,8 @@ const Home = ({
 }) => {
   const [showProductDetails, setShowProductDetails] = useState(false);
   const [selectedItem, setSelectedItem] = useState();
+
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     onFetchProducts();
@@ -33,13 +37,11 @@ const Home = ({
     }
     if (!localStorage.getItem("basket").includes(id)) {
       if (localStorage.getItem("basket").length >= 1 && basket.length === 0) {
-        console.log(basket);
         onInitBasket();
       }
-      console.log("add");
       onAddToBasket(id);
     } else {
-      console.log("already there");
+      alert("already added");
     }
   };
 
@@ -48,6 +50,18 @@ const Home = ({
     const clicked = products.filter((item) => item.idProducts === id);
     setSelectedItem(clicked);
   };
+
+  const filterHandler = (e) => {
+    setFilter(e.target.value.toUpperCase().trim());
+  };
+  let filtered = products;
+  if (filter !== "") {
+    filtered = products.filter(
+      (el) =>
+        el.Keywords.toUpperCase() === filter ||
+        el.Keywords.toUpperCase().split(/[ ,]+/).includes(filter)
+    );
+  }
 
   const hidden =
     localStorage.getItem("username") === null ? null : { visibility: "hidden" };
@@ -72,13 +86,21 @@ const Home = ({
       ) : null}
 
       <h1>Home</h1>
+      <div className="search">
+        <Input
+          key="search"
+          value={filter}
+          elementConfig={{ type: "text", placeholder: "SEARCH" }}
+          changeHandler={(e) => filterHandler(e)}
+        />
+        <i className="fas fa-search"></i>
+      </div>
+
       <div className="container">
         {loading ? (
           <Spinner />
-        ) : products.length === 0 ? (
-          <p>Nothing for sale yet</p>
         ) : (
-          products.map((product, i) => (
+          filtered.map((product, i) => (
             <Product
               key={i}
               id={product.idProducts}

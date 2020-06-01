@@ -38,7 +38,6 @@ const Register = ({ error, errorMsg, onRegister }) => {
     updatedFormElement.value = e.target.value;
     updatedFormData[identifier] = updatedFormElement;
     setFormData(updatedFormData);
-    console.log(e.target.value);
   };
 
   const submitHandler = (e) => {
@@ -47,7 +46,6 @@ const Register = ({ error, errorMsg, onRegister }) => {
     // Check if password and passwordConfirmation matches
     if (password.value !== passwordConfirmation.value) {
       alert("Passwords don't match");
-      console.log("submit");
     } else {
       onRegister(formData.username.value, formData.password.value);
     }

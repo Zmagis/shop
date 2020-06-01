@@ -23,12 +23,12 @@ export const initSentNewProduct = (data) => {
           alert("Product already exits");
           dispatch(sentNewProductFail());
         } else {
-          console.log("some error");
+          alert("error");
           dispatch(sentNewProductFail());
         }
       })
       .catch((err) => {
-        console.error(err);
+        alert(err);
         dispatch(sentNewProductFail());
       });
   };

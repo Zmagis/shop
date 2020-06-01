@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import StripeCheckout from "react-stripe-checkout";
@@ -20,22 +20,19 @@ const Basket = ({ products, onFetchProducts, onRemoveItemFromBasket }) => {
     const body = {
       token,
       products,
-      total
+      total,
     };
-    axios.post("/payment", body)
-    .then((result) => {
+    axios.post("/payment", body).then((result) => {
       if (result.status === 200) {
         alert("success");
-        console.log(result);
       } else {
-        console.log("some error");
+        alert("error");
       }
     });
   };
 
   const removeHandler = (id) => {
     onRemoveItemFromBasket(id);
-    // console.log(id);
   };
 
   if (ids !== null) {
