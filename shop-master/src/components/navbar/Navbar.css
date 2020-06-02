@@ -6,6 +6,7 @@ ul {
   width: 100vw;
   justify-content: space-around;
   padding: 15px 0;
+  font-size: 20px;
 }
 
 ul li a {

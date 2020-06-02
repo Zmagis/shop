@@ -42,7 +42,7 @@ const Home = ({
       }
       onAddToBasket(id);
     } else {
-      alert("already added");
+      console.log("already added");
     }
   };
 
@@ -87,7 +87,7 @@ const Home = ({
         </Backdrop>
       ) : null}
 
-      <h1>Home</h1>
+      {/* <h1>Home</h1> */}
       <div className="search">
         <Input
           key="search"

@@ -74,7 +74,7 @@ const EditPrduct = (props) => {
       .post("/editproduct", data)
       .then((result) => {
         if (result.status === 200) {
-          alert("prodcut updated");
+          alert("product is updated");
         } else if (result.status === 204) {
           alert("product not exits");
         }
