@@ -10,7 +10,8 @@
   display: flex;
   justify-content: center;
   margin: 20px auto 30px auto;
-  border: 1px solid rgba(0, 128, 0, 0.301);
+
+  border-bottom: 2px solid rgba(0, 128, 0, 0.301);
   width: 250px;
   box-sizing: border-box;
 }

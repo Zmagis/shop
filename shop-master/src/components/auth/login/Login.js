@@ -56,6 +56,7 @@ const Login = ({ loading, error, errorMsg, onAuth }) => {
             changeHandler={(e) => changeHandler(e, element.id)}
           />
         ))}
+
         {error ? <p className="error">{errorMsg}</p> : null}
         <button type="submit">Log In</button>
       </form>

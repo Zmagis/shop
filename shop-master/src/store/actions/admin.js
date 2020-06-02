@@ -17,7 +17,7 @@ export const initSentNewProduct = (data) => {
       .post("/addproduct", data)
       .then((result) => {
         if (result.status === 200) {
-          alert("prodcut added");
+          window.location.reload(true);
           dispatch(sentNewProductSuccess());
         } else if (result.status === 204) {
           alert("Product already exits");
